@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Star Kitty - Personalizados e Variedades.">
+<title>🎀 Star Kitty</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+/* Variáveis de Cores */
+:root {
+    /* Modo Claro (Default) */
+    --rosa-kitty: #ff4d88;
+    --rosa-claro: #ff99cc;
+    --rosa-fundo: #fef7f9;
+    --rosa-escuro: #e03f76;
+    --branco: #ffffff;
+    --texto-primario: #333333;
+    --borda-card: #ffe6f0;
+    --borda-input: var(--rosa-claro);
+    --sombra-card: 0 10px 25px rgba(255, 77, 136, 0.15);
+    --sombra-header: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --header-bg: var(--branco);
+    --body-bg: var(--rosa-fundo);
+    --card-bg: var(--branco);
+    --input-bg: var(--branco);
+    --menu-bg-mobile: var(--branco);
+}
+
+/* Modo Escuro - Estilos Aplicados ao body.dark-mode */
+body.dark-mode {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    --texto-primario: #f0e6f2;
+    --rosa-kitty: #ff75ac; 
+    --rosa-claro: #ffcce0;
+    --rosa-escuro: #cc4076;
+    --header-bg: #282846;
+    --body-bg: #1a1a2e;
+    --card-bg: #2e2e50;
+    --input-bg: #3c3c66;
+    --borda-card: #4a4a7a;
+    --borda-input: #4a4a7a;
+    --sombra-card: 0 10px 25px rgba(0, 0, 0, 0.4);
+    --sombra-header: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --menu-bg-mobile: #282846;
+}
+body.dark-mode h2, body.dark-mode h3 { color: var(--rosa-claro); }
+body.dark-mode .menu-mobile-backdrop { background: rgba(0, 0, 0, 0.8); }
+
+/* CORREÇÃO CRÍTICA DO BUG DE VAZAMENTO DE MODAIS/RODAPÉ */
+body.modal-open {
+    overflow: hidden; /* IMPEDE A ROLAGEM QUANDO MODAIS/CARRINHO ESTIVEREM ABERTOS */
+}
+
+/* Animações e Efeitos */
+@keyframes pulse {
+    0% {transform: scale(1);} 50% {transform: scale(1.04);} 100% {transform: scale(1);}
+}
+@keyframes spin {
+    0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}
+}
+
+/* Base e Tipografia */
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', 'Montserrat', sans-serif;}
+html {scroll-behavior:smooth;}
+body {transition:background 0.5s, color 0.5s; overflow-x:hidden; min-height:100vh;}
+section {padding:50px 5vw;}
+h2 {font-family:'Montserrat', sans-serif; font-size:2rem; color:var(--rosa-escuro); margin-bottom:20px; text-align:center; transition:color 0.5s;}
+h3 {font-family:'Montserrat', sans-serif; font-size:1.2rem; color:var(--rosa-escuro); transition:color 0.5s;}
+
+/* Header (Navegação) */
+header {background:var(--header-bg); border-bottom:4px solid var(--rosa-kitty); padding:10px 5vw; display:flex; justify-content:space-between; align-items:center; box-shadow:var(--sombra-header); position:sticky; top:0; z-index:1000; transition:background 0.5s;}
+header h1 {font-size:1.8rem; color:var(--rosa-kitty); font-weight:800; cursor:pointer; font-family:'Montserrat', sans-serif; transition:color 0.5s; display:flex; align-items:center;}
+header h1 .kitty {font-size:2.2rem; margin-right:8px;}
+
+/* Área para Logos/Imagens no Header */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+.custom-logo {
+    height: 40px; /* Ajuste conforme a imagem */
+    margin-right: 15px;
+}
+
+/* Botões de Ação na Header */
+.header-actions {display:flex; align-items:center; gap:10px;}
+.header-actions button, .header-actions a {
+    background:var(--input-bg); border:1px solid var(--borda-card); border-radius:10px; cursor:pointer; 
+    font-size:1.1rem; color:var(--rosa-escuro); padding:8px 10px; transition:0.3s; position:relative;
+}
+.header-actions button:hover, .header-actions a:hover {
+    background:var(--rosa-claro); color:var(--branco); transform:scale(1.05); box-shadow:0 2px 8px var(--rosa-claro);
+}
+body.dark-mode .header-actions button, body.dark-mode .header-actions a {
+    color:var(--rosa-claro); background:var(--card-bg); border-color:var(--borda-input);
+}
+body.dark-mode .header-actions button:hover, body.dark-mode .header-actions a:hover {
+    background:var(--rosa-escuro); color:var(--branco);
+}
+.cart-count {background:var(--rosa-escuro); color:var(--branco); border-radius:50%; padding:2px 6px; font-size:0.75rem; position:absolute; top:-5px; right:-5px; font-weight:700; min-width:20px;}
+.menu-toggle {display:none;} /* Escondido por padrão no desktop */
+
+/* Menu Desktop (Mega Menu Simplificado) */
+nav#mainNav { display: block; } 
+nav#mainNav ul {display:flex; list-style:none; gap:15px;}
+nav#mainNav ul li {position:relative;}
+nav#mainNav ul li a {color:var(--texto-primario); text-decoration:none; font-weight:600; padding:10px 15px; border-radius:25px; transition:0.3s; display:flex; align-items:center; font-size:0.95rem; gap:5px;}
+nav#mainNav ul li a:hover {background:var(--rosa-claro); color:var(--branco); transform:translateY(-1px); box-shadow:0 3px 8px rgba(0,0,0,0.1);}
+body.dark-mode nav#mainNav ul li a {color:var(--rosa-claro);}
+body.dark-mode nav#mainNav ul li a:hover {background:var(--rosa-escuro); color:var(--branco);}
+
+/* Dropdown/Menu Categorias */
+.dropdown-menu {display:none; position:absolute; top:45px; left:0; background:var(--card-bg); border:1px solid var(--borda-card); border-radius:10px; padding:10px 0; box-shadow:0 8px 25px rgba(0,0,0,0.2); min-width:200px; z-index:1001; opacity:0; transform:translateY(10px); transition:opacity 0.3s, transform 0.3s, background 0.5s;}
+nav#mainNav ul li:hover .dropdown-menu {display:block; opacity:1; transform:translateY(0);}
+.dropdown-menu a {color:var(--texto-primario); padding:12px 15px; display:flex; align-items:center; border-radius:0; transition:background 0.2s; font-weight:500;}
+.dropdown-menu a:hover {background:var(--rosa-fundo); color:var(--rosa-kitty); transform:none; box-shadow:none;}
+
+/* Banner */
+.banner {background:linear-gradient(135deg,var(--rosa-claro) 0%,var(--rosa-kitty) 100%); text-align:center; padding:15vh 5vw; color:var(--branco); border-bottom:5px solid var(--rosa-escuro); margin-bottom:0; clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);}
+.banner h2 {font-size:2.5rem; margin-bottom:15px; text-shadow:1px 1px 4px rgba(0,0,0,0.6); color:var(--branco);}
+.banner p {font-size:1.2rem; font-weight:500; text-shadow:1px 1px 3px rgba(0,0,0,0.5); font-family:'Montserrat', sans-serif;}
+.banner .btn-cta {background:var(--rosa-escuro); color:var(--branco); padding:12px 30px; border-radius:30px; text-decoration:none; font-weight:700; display:inline-block; margin-top:30px; transition:0.3s; border:2px solid var(--branco);}
+.banner .btn-cta:hover {background:var(--rosa-claro); transform:scale(1.05);}
+
+/* Filtros */
+.filtros {display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:40px auto; max-width:1100px; padding:0 2vw;}
+.filtros input, .filtros button {
+    padding:10px 18px; border-radius:25px; border:2px solid var(--borda-input); 
+    font-weight:600; cursor:pointer; transition:0.3s; background:var(--input-bg); 
+    color:var(--texto-primario); box-shadow:0 2px 5px rgba(0,0,0,0.05); font-size:0.95rem;
+}
+.filtros input {flex-grow:1; max-width:200px;}
+.filtros button:hover {border-color:var(--rosa-kitty); outline:none; background:var(--rosa-fundo);}
+.filtros button.active {background:var(--rosa-kitty); color:var(--branco); border-color:var(--rosa-kitty); transform:scale(1.02);}
+
+/* Grid de Produtos */
+.container {padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:35px; max-width:1200px; margin:0 auto;}
+.produto {background:var(--card-bg); border-radius:20px; padding:20px; text-align:center; box-shadow:var(--sombra-card); border:1px solid var(--borda-card); transition:0.4s; cursor:pointer; overflow:hidden; position:relative;}
+.produto:hover {transform:translateY(-10px); box-shadow:0 20px 40px rgba(255, 77, 136, 0.4); border-color:var(--rosa-kitty);}
+.produto img {width:100%; height:240px; object-fit:cover; border-radius:15px; margin-bottom:15px; border:3px solid var(--rosa-fundo); transition:transform 0.3s;}
+.produto p {margin-bottom:15px; font-weight:800; font-size:1.3rem; color:var(--rosa-kitty); font-family:'Montserrat', sans-serif;}
+.produto .btn-add {background:var(--rosa-kitty); border:none; color:var(--branco); padding:12px 25px; border-radius:25px; font-size:1rem; font-weight:700; cursor:pointer; transition:0.3s;}
+.produto .btn-add:hover {background:var(--rosa-escuro); transform:scale(1.05);}
+.badge {position:absolute; top:20px; left:20px; padding:7px 14px; border-radius:18px; font-size:0.85rem;}
+
+/* Modal Produto Específico */
+.modal-prod { max-width: 550px; }
+.modal-img-container img { height: 280px; }
+.modal-thumbs { padding: 10px 0; }
+.modal-thumbs img { width: 70px; height: 70px; border-radius: 12px; }
+#modalPreco { font-size: 1.8rem; margin: 20px 0; }
+#modalDescricao { font-size: 1rem; }
+
+/* Modal Backdrop - Otimizado para não vazar! */
+.modal-backdrop {
+    position: fixed; inset: 0; background: rgba(255, 240, 246, 0.95); z-index: 9999;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s;
+    display: flex; align-items: center; justify-content: center;
+}
+.modal-backdrop.show {
+    opacity: 1; visibility: visible;
+}
+
+/* Carrinho Lateral */
+#carrinhoLateral {
+    position: fixed; top: 0; right: 0; width: 85vw; max-width: 350px; height: 100%;
+    background: var(--card-bg); transform: translateX(100%); transition: transform 0.4s;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); z-index: 9999;
+    padding: 20px; display: flex; flex-direction: column;
+}
+#carrinhoLateral.open {
+    transform: translateX(0);
+}
+
+/* Menu Lateral Mobile */
+.menu-mobile-backdrop {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 998;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s;
+}
+.menu-mobile-backdrop.open {opacity: 1; visibility: visible;}
+
+#mobileMenu {
+    position: fixed; top: 0; right: 0; width: 75vw; max-width: 300px; height: 100%; 
+    background: var(--menu-bg-mobile); transform: translateX(100%); 
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+    z-index: 999; overflow-y: auto; padding-top: 20px;
+}
+#mobileMenu.open {transform: translateX(0);} 
+#mobileMenu .close-btn {text-align: right; padding: 0 20px 10px 0;}
+#mobileMenu .close-btn button {background: none; border: none; font-size: 1.8rem; color: var(--rosa-escuro); cursor: pointer;}
+#mobileMenu ul {list-style:none; padding:0;}
+#mobileMenu ul li {border-bottom:1px solid var(--borda-card);} 
+#mobileMenu ul li:last-child {border-bottom:none;} 
+#mobileMenu ul li a {
+    padding:18px 25px; justify-content:flex-start; color:var(--texto-primario); 
+    display:flex; align-items:center; gap:10px; font-size:1rem; font-weight:600;
+} 
+#mobileMenu ul li a:hover {background:var(--rosa-fundo); color:var(--rosa-kitty);}
+
+/* Esconder no desktop */
+@media(min-width: 993px) {
+    .menu-toggle, #mobileMenu, .menu-mobile-backdrop { display: none !important; }
+}
+
+/* Mostrar no mobile e ajustar header */
+@media(max-width: 992px) {
+    nav#mainNav { display: none; }
+    .menu-toggle { display: block; }
+    header { height: 70px; padding: 10px 4vw; }
+    header h1 { font-size: 1.5rem; }
+    header h1 .kitty { font-size: 1.8rem; }
+    .header-actions { gap: 5px; }
+    .banner { padding: 10vh 5vw; }
+    .banner h2 { font-size: 2rem; }
+    .container { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+    .produto img { height: 200px; }
+    .filtros input { max-width: 100%; }
+    .filtros button { flex-grow: 1; }
+}
+
+</style>
+</head>
+<body onclick="fecharModalDeFora(event)">
+
+<header>
+    <div class="logo-container">
+        <h1 onclick="mostrarTodosProdutos(); resetFiltros();"><span class="kitty">🌟</span> STAR KITTY</h1>
+    </div>
+    
+    <nav id="mainNav">
+        <ul>
+            <li><a href="#produtosContainer"><i class="fas fa-home"></i> Início</a></li>
+            <li class="dropdown" onmouseover="showDropdown(this)" onmouseout="hideDropdown(this)">
+                <a href="#" onclick="return false;"><i class="fas fa-tags"></i> Categorias <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" onclick="filtrarProdutosPorCategoria('acessorios');"><i class="fas fa-gem"></i> Acessórios</a>
+                    <a href="#" onclick="filtrarProdutosPorCategoria('eletronicos');"><i class="fas fa-bolt"></i> Eletrônicos</a>
+                    <a href="#" onclick="filtrarProdutosPorCategoria('casa');"><i class="fas fa-couch"></i> Casa & Decoração</a>
+                    <a href="#" onclick="filtrarProdutosPorCategoria('gamer');"><i class="fas fa-gamepad"></i> Gamer</a>
+                </div>
+            </li>
+            <li><a href="#about"><i class="fas fa-paw"></i> Sobre Nós</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-actions">
+        <button class="theme-switch" onclick="toggleTheme()" id="themeToggle" aria-label="Alternar Modo Escuro">
+            <i class="fas fa-sun" id="themeIcon"></i>
+        </button>
+        <button onclick="toggleCarrinhoLateral()" aria-label="Abrir Carrinho">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button onclick="abrirModalDoacao()" aria-label="Fazer Doação">
+            <i class="fas fa-heart"></i>
+        </button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<div class="menu-mobile-backdrop" id="mobileMenuBackdrop" onclick="fecharMenu()"></div>
+
+<nav id="mobileMenu" aria-label="Menu Principal Mobile">
+    <div class="close-btn"><button onclick="fecharMenu()">×</button></div>
+    <ul>
+        <li><a href="#produtosContainer" onclick="fecharMenu()"><i class="fas fa-home"></i> Início</a></li>
+        <li class="dropdown" onclick="toggleDropdownMobile(this.querySelector('a'))">
+            <a href="#"><i class="fas fa-tags"></i> Categorias <i class="fas fa-caret-down"></i></a>
+            <div class="dropdown-menu">
+                <a href="#" onclick="filtrarProdutosPorCategoria('acessorios'); fecharMenu();"><i class="fas fa-gem"></i> Acessórios</a>
+                <a href="#" onclick="filtrarProdutosPorCategoria('eletronicos'); fecharMenu();"><i class="fas fa-bolt"></i> Eletrônicos</a>
+                <a href="#" onclick="filtrarProdutosPorCategoria('casa'); fecharMenu();"><i class="fas fa-couch"></i> Casa & Decoração</a>
+                <a href="#" onclick="filtrarProdutosPorCategoria('gamer'); fecharMenu();"><i class="fas fa-gamepad"></i> Gamer</a>
+            </div>
+        </li>
+        <li><a href="#about" onclick="fecharMenu()"><i class="fas fa-paw"></i> Sobre Nós</a></li>
+        <li><a href="#" onclick="toggleCarrinhoLateral(); fecharMenu()"><i class="fas fa-shopping-cart"></i> Carrinho</a></li>
+    </ul>
+</nav>
+
+
+<section class="banner">
+    <h2>Loja <span>🎀</span> Star Kitty</h2>
+    <p>Produtos selecionados, design impecável e qualidade Star Kitty.</p>
+    <a href="#produtosContainer" class="btn-cta">Ver Produtos <i class="fas fa-arrow-down"></i></a>
+</section>
+
+<div class="filtros">
+    <input type="text" id="pesquisaProduto" placeholder="Pesquisar Produto..." oninput="aplicarFiltros()" aria-label="Pesquisar Produto">
+    <input type="number" id="precoMin" placeholder="Mínimo (R$)" min="0" oninput="aplicarFiltros()" aria-label="Preço Mínimo">
+    <input type="number" id="precoMax" placeholder="Máximo (R$)" min="0" oninput="aplicarFiltros()" aria-label="Preço Máximo">
+    <button onclick="ordenarPreco('menor', event)" aria-label="Ordenar por Menor Preço"><i class="fas fa-arrow-up"></i> Menor Preço</button>
+    <button onclick="ordenarPreco('maior', event)" aria-label="Ordenar por Maior Preço"><i class="fas fa-arrow-down"></i> Maior Preço</button>
+    <button onclick="filtrarPromo(event)" id="btnPromo" aria-label="Filtrar Produtos em Promoção"><i class="fas fa-fire"></i> Promoção</button>
+    <button onclick="mostrarTodosProdutos()" aria-label="Mostrar Todos os Produtos"><i class="fas fa-th-large"></i> Todos</button>
+</div>
+
+<section id="produtosContainer">
+    <div class="container" id="produtos" role="region" aria-live="polite">
+        </div>
+</section>
+
+<section id="about" style="text-align:center; padding:60px 5vw; background: var(--card-bg); margin-top:30px; border-top: 1px solid var(--borda-card);">
+    <h2>Sobre a Star Kitty <span>✨</span></h2>
+    <p style="max-width: 800px; margin: 0 auto; line-height: 1.7; font-size:1.1rem;"> TESTANDO .... 🐾</p>
+</section>
+
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalNome" onclick="fecharModalDeFora(event, 'modalBackdrop')">
+    <div class="modal-prod" onclick="event.stopPropagation()">
+        <div class="preloader" id="productPreloader">
+            <div class="spinner"></div>
+        </div>
+        <button class="close" onclick="fecharModal()" aria-label="Fechar Modal">×</button>
+        <div class="modal-img-container">
+            <img src="" id="modalImg" alt="Produto em destaque">
+        </div>
+        <div class="modal-thumbs" id="modalThumbs"></div>
+        <h3 id="modalNome"></h3>
+        <p id="modalDescricao"></p>
+        <div id="variacoesProduto"></div>
+        <p id="modalPreco"></p>
+        <label>Quantidade: <input type="number" id="quantidadeProduto" min="1" value="1" aria-label="Quantidade do Produto"></label>
+        <button class="btn-add" style="margin-top:20px; width:100%;" onclick="adicionarCarrinhoModal()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="modalPix" role="dialog" aria-modal="true" aria-labelledby="pixTotal" onclick="fecharModalDeFora(event, 'modalPix')">
+    <div class="modal-pix" onclick="event.stopPropagation()">
+        <button class="close" onclick="fecharPix()" aria-label="Fechar Modal de Pagamento">×</button>
+        <h3><span>💸</span> Pagamento via PIX (Simulação)</h3>
+        <div class="pix-content">
+            <p id="pixTotal" style="font-size:1.4rem; color:var(--rosa-escuro);"></p>
+            <img src="" id="pixQrCode" alt="QR Code PIX">
+            <p>Ou clique para copiar a chave:</p>
+            <p id="pixChave" onclick="copiarChave(this)" role="button" aria-label="Copiar Chave PIX">starkitty.pagamentos@pix.com</p>
+        </div>
+        <p>Após o pagamento, envie o comprovante no WhatsApp:</p>
+        <a id="linkWhatsapp" target="_blank" class="btn-whatsapp" aria-label="Enviar Comprovante por WhatsApp"><i class="fab fa-whatsapp"></i> Enviar Comprovante</a>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="modalDoacao" role="dialog" aria-modal="true" aria-labelledby="doacaoTitulo" onclick="fecharModalDeFora(event, 'modalDoacao')">
+    <div class="modal-doacao" style="text-align:center;" onclick="event.stopPropagation()">
+        <button class="close" onclick="fecharModalDoacao()" aria-label="Fechar Modal de Doação">×</button>
+        <h3 id="doacaoTitulo"><span>🎁</span> Apoie a Star Kitty!</h3>
+        <p>Sua doação ajuda a manter a fofura e o estilo em nosso estoque! <i class="fas fa-paw"></i></p>
+        <div class="pix-content">
+            <img src="" id="doacaoQrCode" alt="QR Code Doação">
+            <p>Chave PIX para Doação:</p>
+            <p id="doacaoChave" onclick="copiarChave(this)" role="button" aria-label="Copiar Chave PIX para Doação">starkitty.doacoes@pix.com</p>
+        </div>
+        <p>Obrigado pelo seu apoio e carinho! <i class="fas fa-star"></i></p>
+    </div>
+</div>
+
+<div id="carrinhoLateral" role="complementary" aria-label="Carrinho de Compras">
+    <h2><span>🎀</span> Seu Carrinho <span onclick="toggleCarrinhoLateral()" style="cursor:pointer;" aria-label="Fechar Carrinho"><i class="fas fa-times"></i></span></h2>
+    <div id="itensCarrinho" aria-live="polite"></div>
+    <div id="totalCarrinho">Total: R$ 0,00</div>
+    <button class="btn-add" onclick="abrirPix()"><i class="fas fa-qrcode"></i> Finalizar Compra (PIX)</button>
+</div>
+
+<div id="avisoToast" role="alert" aria-live="assertive">
+    <span id="mensagemToast"></span>
+</div>
+
+<footer>© 2025 <span>🌟</span> STAR KITTY. Todos os direitos reservados.</footer>
+
+<script>
+// Lista global de produtos (MANTIDA)
+const listaProdutos = [
+    { nome: "Garrafas Pacco", preco: 65.00, desc: "Conjunto fofo de garrafas térmicas em vários tamanhos para manter sua bebida na temperatura ideal.", img: ["imagem/produtos/produto4.jpg", "imagem/produtos/produto3.jpg", "imagem/produtos/produto2.jpg", "imagem/produtos/produto1.jpg"], promo: true, categoria: 'acessorios',
+        variacoes: [
+            { nome: "500ml", preco: 65.00, img: "imagem/produtos/produto4.jpg" },
+            { nome: "650ml", preco: 78.00, img: "imagem/produtos/produto3.jpg" },
+            { nome: "950ml", preco: 90.00, img: "imagem/produtos/produto2.jpg" },
+            { nome: "1100ml", preco: 100.00, img: "imagem/produtos/produto1.jpg" }
+        ]
+    },
+    { nome: "POWER BANK 10.000 mAh - Rosa", preco: 90.00, desc: "Carregador portátil compacto e rosa!", img: ["imagem/produtos/produto5.jpg"], categoria: 'eletronicos' },
+    { nome: "POWER BANK 10.000 mAh - Branco", preco: 78.00, desc: "Bateria externa branca, essencial para quem está sempre em movimento.", img: ["imagem/produtos/produto6.jpg"], categoria: 'eletronicos' },
+    { nome: "Suporte para Celular - Pata de Gato", preco: 15.00, desc: "Suporte de mesa com design adorável de pata de gato.", img: ["imagem/produtos/produto7.jpg"], categoria: 'acessorios' },
+    { nome: "Suporte para Tablet e Celular", preco: 20.00, desc: "Suporte ajustável para tablet e celular.", img: ["imagem/produtos/produto8.jpg"], categoria: 'acessorios' },
+    { nome: "MINI VENTILADOR PORTÁTIL - COELHO", preco: 23.00, desc: "Mini ventilador com orelhas de coelho!.", img: ["imagem/produtos/produto9.jpg"], categoria: 'eletronicos' },
+    { nome: "MINI VENTILADOR PORTÁTIL - GATO", preco: 23.00, desc: "Mini ventilador com design de gatinho.", img: ["imagem/produtos/produto10.jpg"], categoria: 'eletronicos' },
+    { nome: "MINI VENTILADOR PORTÁTIL - SIMPLES", preco: 20.00, desc: "Ventilador portátil, simples e eficaz.", img: ["imagem/produtos/produto11.jpg"], categoria: 'eletronicos' },
+    { nome: "MINI VENTILADOR PORTÁTIL - ANIMAIS", preco: 24.00, desc: "Várias opções de animais fofos!", img: ["imagem/produtos/produto12.jpg"], categoria: 'eletronicos' },
+    { nome: "FONE M28 (Gamer)", preco: 35.00, desc: "Fone de ouvido sem fio, com baixa latência e luzes LED.", img: ["imagem/produtos/produto13.jpg"], categoria: 'eletronicos' },
+    { nome: "FONE ALTO-FALANTE MX07", preco: 85.00, desc: "Um fone que também é alto-falante!", img: ["imagem/produtos/produto14.jpg"], categoria: 'eletronicos' },
+    { nome: "MICROFONE BLUETOOTH MK02", preco: 93.00, desc: "Microfone sem fio com qualidade de som cristalina.", img: ["imagem/produtos/produto15.jpg"], categoria: 'eletronicos' },
+    { nome: "LIVRO DE COLORIR - CAPYBARA", preco: 20.00, desc: "Livro de colorir temático de capivaras!", img: ["imagem/produtos/produto16.jpg"], categoria: 'casa' },
+    { nome: "CANETA P10 - TOUCH", preco: 50.00, desc: "Caneta touch de alta precisão para telas.", img: ["imagem/produtos/produto17.jpg"], categoria: 'acessorios' },
+    { nome: "FONE DE OUVIDO HEADSET BLUETOOTH P9", preco: 78.00, desc: "Headset super confortável com som imersivo.", img: ["imagem/produtos/produto18.jpg"], categoria: 'eletronicos' },
+    { nome: "COPO TÉRMICO - GOKU", preco: 45.00, desc: "Copo térmico inspirado no Goku.", img: ["imagem/produtos/produto19.jpg"], categoria: 'casa' },
+    { nome: "GARRAFA TERMICA - STANLEY Style", preco: 80.00, desc: "Garrafa térmica de alta qualidade, inspirada no design Stanley.", img: ["imagem/produtos/produto20.jpg"], categoria: 'casa' },
+    { nome: "FONES M10", preco: 46.00, desc: "Fones de ouvido sem fio M10, com excelente bateria.", img: ["imagem/produtos/produto21.jpg"], categoria: 'eletronicos' },
+    { nome: "MINI TECLADO BLUETOOTH", preco: 75.00, desc: "Mini teclado sem fio, ideal para tablets e celulares.", img: ["imagem/produtos/produto22.jpg"], categoria: 'eletronicos' },
+    { nome: "Teclado com fio", preco: 45.00, desc: "Teclado básico e confiável com conexão por fio.", img: ["imagem/produtos/produto23.jpg"], categoria: 'eletronicos' },
+    { nome: "Teclado Gamer AOS", preco: 83.00, desc: "Teclado gamer com resposta rápida.", img: ["imagem/produtos/produto24.jpg"], categoria: 'gamer' },
+    { nome: "CONJUNTO MOUSE E TECLADO GAMER", preco: 110.00, desc: "Kit completo com mouse e teclado gamer.", img: ["imagem/produtos/produto25.jpg"], categoria: 'gamer' },
+    { nome: "CONJUNTO GAMER COLLORFULL", preco: 120.00, desc: "Conjunto de mouse e teclado gamer com cores vibrantes.", img: ["imagem/produtos/produto26.jpg", "imagem/produtos/produto27.jpg", "imagem/produtos/produto28.jpg", "imagem/produtos/produto29.jpg"], promo: true, categoria: 'gamer',
+        variacoes: [
+            { nome: "Branco e Rosa", preco: 120.00, img: "imagem/produtos/produto26.jpg" },
+            { nome: "Vermelho e Preto", preco: 120.00, img: "imagem/produtos/produto27.jpg" },
+            { nome: "Branco e Azul", preco: 120.00, img: "imagem/produtos/produto28.jpg" },
+            { nome: "Branco e Amarelo", preco: 120.00, img: "imagem/produtos/produto29.jpg" }
+        ]
+    },
+    { nome: "MINI TECLADO GAMER", preco: 80.00, desc: "Teclado compacto, ideal para quem precisa de mais espaço na mesa.", img: ["imagem/produtos/produto30.jpg"], categoria: 'gamer' },
+    { nome: "PORTA MAQUIAGEM ACRÍLICO", preco: 56.00, desc: "Organizador de maquiagem transparente.", img: ["imagem/produtos/produto31.jpg"], categoria: 'casa' },
+    { nome: "ESPELHO LED", preco: 50.00, desc: "Espelho de mesa com iluminação LED.", img: ["imagem/produtos/produto32.jpg"], categoria: 'casa' }
+];
+
+let carrinho = [];
+let produtoAtual = null;
+const containerProdutos = document.getElementById('produtos');
+let filtroCategoriaAtiva = null;
+let filtroPromocaoAtiva = false;
+let ordemPreco = null;
+
+// ----------------------------------------------------
+// BLOQUEIO DE ROLAGEM (Solução para o bug do final do site)
+// ----------------------------------------------------
+function toggleBodyScroll(lock) {
+    document.body.classList.toggle('modal-open', lock);
+}
+
+// ----------------------------------------------------
+// TEMA (DARK MODE) E LOCALSTORAGE
+// ----------------------------------------------------
+function toggleTheme() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    updateThemeIcon(isDarkMode);
+}
+
+function updateThemeIcon(isDarkMode) {
+    const icon = document.getElementById('themeIcon');
+    if (icon) {
+        icon.className = isDarkMode ? 'fas fa-moon' : 'fas fa-sun';
+    }
+}
+
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const isDarkMode = savedTheme === 'dark';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+    updateThemeIcon(isDarkMode);
+}
+
+function loadCarrinho() {
+    const savedCarrinho = localStorage.getItem('carrinhoStarKitty');
+    if (savedCarrinho) {
+        try {
+            carrinho = JSON.parse(savedCarrinho);
+        } catch (e) {
+            console.error("Erro ao carregar carrinho do localStorage:", e);
+            carrinho = [];
+        }
+    }
+    atualizarCarrinho();
+}
+
+function saveCarrinho() {
+    localStorage.setItem('carrinhoStarKitty', JSON.stringify(carrinho));
+}
+
+
+// ----------------------------------------------------
+// FUNÇÕES DE NAVEGAÇÃO MOBILE/DROPDOWN
+// ----------------------------------------------------
+function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    
+    if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        backdrop.classList.remove('open');
+        toggleBodyScroll(false); // Libera rolagem
+    } else {
+        menu.classList.add('open');
+        backdrop.classList.add('open');
+        document.getElementById('carrinhoLateral').classList.remove('open');
+        toggleBodyScroll(true); // Bloqueia rolagem
+    }
+}
+function fecharMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('mobileMenuBackdrop').classList.remove('open');
+    document.querySelectorAll('#mobileMenu .dropdown').forEach(d => d.classList.remove('active'));
+    toggleBodyScroll(false); // Libera rolagem
+}
+
+function showDropdown(element) {
+    if (window.innerWidth > 992) {
+        element.classList.add('active');
+    }
+}
+function hideDropdown(element) {
+    if (window.innerWidth > 992) {
+        element.classList.remove('active');
+    }
+}
+
+function toggleDropdownMobile(element) {
+    const parentLi = element.closest('.dropdown');
+    // Apenas para mobile
+    if (window.innerWidth <= 992) {
+        parentLi.classList.toggle('active');
+        // Fecha outros dropdowns
+        document.querySelectorAll('#mobileMenu .dropdown').forEach(d => {
+            if (d !== parentLi) d.classList.remove('active');
+        });
+    }
+    return false; // Previne navegação padrão do link
+}
+
+
+// ----------------------------------------------------
+// FUNÇÕES DE FILTRO E EXIBIÇÃO (MANTIDAS)
+// ----------------------------------------------------
+function mostrarProdutos(lista){
+    containerProdutos.innerHTML='';
+    
+    if (lista.length === 0) {
+        containerProdutos.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--rosa-kitty); font-weight: 700; font-size:1.2rem;">Nenhum produto encontrado. A fofura sumiu! 🥺</p>';
+        return;
+    }
+
+    lista.forEach((p, index)=>{
+        const div=document.createElement('div'); div.classList.add('produto');
+        const originalIndex = listaProdutos.findIndex(prod => prod.nome === p.nome); 
+        div.setAttribute('data-original-index', originalIndex);
+
+        div.innerHTML=`${p.promo?'<div class="badge">PROMO</div>':''}
+            <img src="${p.img[0]}" alt="${p.nome}" loading="lazy" onclick="abrirProduto(${originalIndex})">
+            <h3>${p.nome}</h3>
+            <p>R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
+            <button class="btn-add" onclick="abrirProduto(${originalIndex})"><i class="fas fa-eye"></i> Ver Detalhes</button>`;
+        containerProdutos.appendChild(div);
+    });
+}
+
+function resetFiltros(keepSearch = false) {
+    document.querySelectorAll('.filtros button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('precoMin').value = '';
+    document.getElementById('precoMax').value = '';
+    
+    filtroCategoriaAtiva = null;
+    filtroPromocaoAtiva = false;
+    ordemPreco = null;
+
+    if (!keepSearch) {
+        document.getElementById('pesquisaProduto').value = '';
+    }
+}
+
+function aplicarFiltros(listaBase = listaProdutos) {
+    let listaFiltrada = filtroCategoriaAtiva 
+        ? listaBase.filter(p => p.categoria === filtroCategoriaAtiva)
+        : [...listaBase];
+
+    const termo = document.getElementById('pesquisaProduto').value.toLowerCase().trim();
+    if (termo) {
+        listaFiltrada = listaFiltrada.filter(p => p.nome.toLowerCase().includes(termo) || (p.desc && p.desc.toLowerCase().includes(termo)));
+    }
+    
+    const precoMin = parseFloat(document.getElementById('precoMin').value) || 0;
+    const precoMax = parseFloat(document.getElementById('precoMax').value) || Infinity;
+
+    if (precoMin > 0 || precoMax !== Infinity) {
+        listaFiltrada = listaFiltrada.filter(p => p.preco >= precoMin && p.preco <= precoMax);
+    }
+
+    if (filtroPromocaoAtiva) {
+         listaFiltrada = listaFiltrada.filter(p => p.promo);
+    }
+    
+    if (ordemPreco) {
+        if (ordemPreco === 'menor') {
+            listaFiltrada.sort((a,b)=>a.preco-b.preco);
+        } else if (ordemPreco === 'maior') {
+            listaFiltrada.sort((a,b)=>b.preco-a.preco);
+        }
+    }
+    
+    mostrarProdutos(listaFiltrada);
+}
+
+
+function ordenarPreco(tipo, event){
+    ordemPreco = tipo;
+    filtroPromocaoAtiva = false;
+    
+    document.querySelectorAll('.filtros button').forEach(btn => btn.classList.remove('active'));
+    
+    const clickedButton = event.target.closest('button');
+    if(clickedButton) clickedButton.classList.add('active');
+
+    aplicarFiltros();
+}
+
+function filtrarPromo(event) {
+    ordemPreco = null;
+    filtroPromocaoAtiva = !filtroPromocaoAtiva; 
+
+    document.querySelectorAll('.filtros button').forEach(btn => btn.classList.remove('active'));
+    
+    const clickedButton = event.target.closest('button');
+    if(clickedButton && filtroPromocaoAtiva) clickedButton.classList.add('active');
+
+    aplicarFiltros();
+}
+
+function filtrarProdutosPorCategoria(categoria) {
+    resetFiltros(true); 
+
+    filtroCategoriaAtiva = categoria;
+    ordemPreco = null;
+    
+    aplicarFiltros();
+    mostrarToast(`Filtro Ativo: ${categoria.toUpperCase()} 💖`);
+}
+
+function mostrarTodosProdutos() {
+    resetFiltros(); 
+    mostrarProdutos(listaProdutos);
+}
+
+// ----------------------------------------------------
+// FUNÇÕES DO MODAL DE PRODUTO + PRELOADER DE 3s
+// ----------------------------------------------------
+function abrirProduto(i){
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const preloader = document.getElementById('productPreloader');
+    
+    modalBackdrop.classList.add('show');
+    preloader.classList.add('show');
+    toggleBodyScroll(true); // Bloqueia rolagem
+    
+    // 3 segundos de simulação de carregamento
+    setTimeout(() => {
+        const produtoOriginal = listaProdutos[i];
+        produtoAtual = JSON.parse(JSON.stringify(produtoOriginal)); 
+        
+        document.getElementById('modalNome').textContent = produtoAtual.nome;
+        document.getElementById('modalDescricao').textContent = produtoAtual.desc || "Produto Star Kitty: fofo, estiloso e de qualidade garantida.";
+        document.getElementById('quantidadeProduto').value = 1;
+
+        const thumbs = document.getElementById('modalThumbs');
+        thumbs.innerHTML = '';
+        const variacoesDiv = document.getElementById('variacoesProduto');
+        variacoesDiv.innerHTML = '';
+        variacoesDiv.style.display = produtoAtual.variacoes ? 'flex' : 'none';
+
+        if (produtoAtual.variacoes && produtoAtual.variacoes.length > 0) {
+            produtoAtual.variacoes.forEach((v, idx) => {
+                const btn = document.createElement('button');
+                btn.textContent = v.nome;
+                btn.onclick = (e) => mudarVariacao(v, e.target);
+                variacoesDiv.appendChild(btn);
+
+                const imgThumb = document.createElement('img');
+                imgThumb.src = v.img;
+                imgThumb.classList.add('modal-thumb');
+                imgThumb.onclick = () => mudarVariacao(v, btn);
+                thumbs.appendChild(imgThumb);
+
+                if (idx === 0) { mudarVariacao(v, btn); } 
+            });
+        } else {
+            document.getElementById('modalImg').src = produtoAtual.img[0];
+            document.getElementById('modalPreco').textContent = "R$ " + produtoAtual.preco.toFixed(2).replace('.', ',');
+            produtoAtual.variacaoAtiva = 'Padrão';
+
+            produtoAtual.img.forEach((src) => {
+                 const imgThumb = document.createElement('img');
+                imgThumb.src = src;
+                imgThumb.classList.add('modal-thumb');
+                if (src === produtoAtual.img[0]) imgThumb.classList.add('active');
+                imgThumb.onclick = () => {
+                     document.getElementById('modalImg').src = src;
+                     document.querySelectorAll('.modal-thumb').forEach(i => i.classList.remove('active'));
+                     imgThumb.classList.add('active');
+                };
+                thumbs.appendChild(imgThumb);
+            });
+        }
+        
+        preloader.classList.remove('show');
+    }, 3000); 
+}
+
+function mudarVariacao(variacao, botao){
+    document.getElementById('modalImg').src = variacao.img;
+    document.getElementById('modalPreco').textContent = "R$ " + variacao.preco.toFixed(2).replace('.', ',');
+    
+    produtoAtual.preco = variacao.preco;
+    produtoAtual.variacaoAtiva = variacao.nome;
+
+    document.querySelectorAll('#variacoesProduto button').forEach(btn => btn.classList.remove('active'));
+    if(botao) { botao.classList.add('active'); }
+
+    document.querySelectorAll('.modal-thumb').forEach(thumb => {
+        thumb.classList.toggle('active', thumb.src.includes(variacao.img));
+    });
+}
+
+function fecharModal(){
+    document.getElementById('modalBackdrop').classList.remove('show');
+    produtoAtual = null; 
+    toggleBodyScroll(false); // Libera rolagem
+}
+
+function fecharModalDeFora(e, id) {
+    if (e.target.classList.contains('modal-backdrop')) {
+        document.getElementById('modalBackdrop').classList.remove('show');
+        document.getElementById('modalPix').classList.remove('show');
+        document.getElementById('modalDoacao').classList.remove('show');
+        toggleBodyScroll(false); // Libera rolagem
+    }
+}
+
+// ----------------------------------------------------
+// FUNÇÕES DO CARRINHO
+// ----------------------------------------------------
+function toggleCarrinhoLateral(){
+    const carrinhoElement = document.getElementById('carrinhoLateral');
+    const isOpening = !carrinhoElement.classList.contains('open');
+
+    carrinhoElement.classList.toggle('open');
+    
+    if (isOpening) {
+        document.getElementById('mobileMenu').classList.remove('open');
+        document.getElementById('mobileMenuBackdrop').classList.remove('open');
+        toggleBodyScroll(true); // Bloqueia rolagem
+    } else {
+        toggleBodyScroll(false); // Libera rolagem
+    }
+}
+
+function adicionarCarrinhoModal(){
+    if (!produtoAtual) return; 
+
+    const qtd = parseInt(document.getElementById("quantidadeProduto").value) || 1;
+    const variacaoStr = produtoAtual.variacaoAtiva && produtoAtual.variacaoAtiva !== 'Padrão' ? ` (${produtoAtual.variacaoAtiva})` : '';
+    const nomeCompleto = produtoAtual.nome + variacaoStr;
+    
+    const existente = carrinho.find(p => p.nomeCompleto === nomeCompleto);
+    
+    if(existente){
+        existente.qtd += qtd;
+    } else {
+        carrinho.push({
+            nomeCompleto: nomeCompleto,
+            preco: produtoAtual.preco,
+            qtd: qtd,
+            img: document.getElementById('modalImg').src 
+        });
+    }
+    
+    atualizarCarrinho();
+    fecharModal();
+    mostrarToast("🎀 " + produtoAtual.nome + variacaoStr + " adicionado ao carrinho!");
+    document.getElementById('carrinhoLateral').classList.add('open'); 
+    toggleBodyScroll(true); // Garante que a rolagem continua bloqueada (por causa do carrinho)
+}
+
+function atualizarCarrinho(){
+    const lista=document.getElementById('itensCarrinho');
+    const cartCount = document.getElementById('cartCount');
+    lista.innerHTML='';
+    let total=0;
+    let totalItens = 0;
+    
+    if (carrinho.length === 0) {
+        lista.innerHTML = '<p style="text-align:center; color:var(--texto-primario); opacity:0.7; margin-top:20px;">Seu carrinho está vazio! 🥺</p>';
+    }
+    
+    carrinho.forEach((p,i)=>{
+        total+=p.preco*p.qtd;
+        totalItens += p.qtd;
+        const div=document.createElement('div');
+        div.classList.add('itemCarrinho');
+        div.draggable=true;
+        div.dataset.index = i; 
+        
+        div.innerHTML=`<span style="max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${p.nomeCompleto} x <input type="number" value="${p.qtd}" min="1" onchange="alterarQuantidade(${i}, this.value)"></span>
+        <span>R$ ${(p.preco*p.qtd).toFixed(2).replace('.', ',')}</span>
+        <button onclick="removerItem(${i})"><i class="fas fa-trash-alt"></i></button>`;
+        
+        lista.appendChild(div);
+    });
+    
+    document.getElementById('totalCarrinho').textContent="Total: R$ "+total.toFixed(2).replace('.', ',');
+    cartCount.textContent = totalItens;
+    saveCarrinho(); 
+}
+
+function alterarQuantidade(index, valor){
+    const novaQtd = parseInt(valor) || 1;
+    if (novaQtd > 0) {
+        carrinho[index].qtd = novaQtd;
+    } else {
+        removerItem(index);
+        return;
+    }
+    atualizarCarrinho();
+}
+
+function removerItem(i){
+    carrinho.splice(i,1);
+    atualizarCarrinho();
+    mostrarToast("Item removido. 😿");
+}
+
+// ----------------------------------------------------
+// FUNÇÕES DE PAGAMENTO E DOAÇÃO
+// ----------------------------------------------------
+function abrirPix(){
+    if(carrinho.length === 0){ 
+        mostrarToast("Carrinho vazio! Adicione itens. 🛑");
+        return;
+    }
+
+    toggleCarrinhoLateral(); // Fecha o carrinho lateral (se aberto)
+    
+    const total = carrinho.reduce((a,b) => a + b.preco * b.qtd, 0).toFixed(2);
+    const chavePix = document.getElementById('pixChave').textContent;
+    const numeroWhatsapp = "11999998888"; 
+
+    document.getElementById('pixTotal').textContent = `Valor a Pagar: R$ ${total.replace('.', ',')}`;
+    
+    const pixData = `PIX ${chavePix} R$${total}`;
+    document.getElementById('pixQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(pixData)}&size=200x200&color=e03f76&bgcolor=fef7f9`;
+
+    const itensCarrinhoWhats = carrinho.map(p => ` - ${p.nomeCompleto} x${p.qtd}`).join('\n');
+    const msgWhats = `Olá Star Kitty! Acabei de fazer um PIX de R$ ${total.replace('.', ',')}. Meu pedido:\n${itensCarrinhoWhats}\n\nComprovante anexo. 💖`;
+    
+    document.getElementById('linkWhatsapp').href = `https://wa.me/55${numeroWhatsapp}?text=${encodeURIComponent(msgWhats)}`;
+
+    document.getElementById('modalPix').classList.add('show');
+    toggleBodyScroll(true); // Bloqueia rolagem
+}
+
+function fecharPix(){   
+    document.getElementById('modalPix').classList.remove('show');
+    toggleBodyScroll(false); // Libera rolagem
+}
+
+function abrirModalDoacao() {
+    document.getElementById('modalDoacao').classList.add('show');
+    toggleBodyScroll(true); // Bloqueia rolagem
+    
+    const chaveDoacao = document.getElementById('doacaoChave').textContent;
+    const pixDataDoacao = `PIX ${chaveDoacao}`;
+    document.getElementById('doacaoQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(pixDataDoacao)}&size=200x200&color=e03f76&bgcolor=fef7f9`;
+}
+
+function fecharModalDoacao() {
+    document.getElementById('modalDoacao').classList.remove('show');
+    toggleBodyScroll(false); // Libera rolagem
+}
+
+function mostrarToast(msg){
+    const toast=document.getElementById('avisoToast');
+    document.getElementById('mensagemToast').textContent=msg;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),4000);
+}
+
+function copiarChave(element) {
+    const chave = element.textContent;
+    navigator.clipboard.writeText(chave).then(() => {
+        mostrarToast("Chave PIX copiada! 🎉");
+    }).catch(err => {
+        console.error('Falha ao copiar:', err);
+        mostrarToast("Erro ao copiar. Tente manualmente.");
+    });
+}
+
+// ----------------------------------------------------
+// DRAG & DROP (MANTIDO)
+// ----------------------------------------------------
+document.getElementById('itensCarrinho').addEventListener('dragstart',e=>{
+    const item = e.target.closest('.itemCarrinho');
+    if (item) {
+        e.dataTransfer.setData('text/plain', item.dataset.index);
+        item.classList.add('dragging');
+        const draggedIndex = parseInt(item.dataset.index);
+        const img = new Image();
+        img.src = carrinho[draggedIndex].img || ''; 
+        e.dataTransfer.setDragImage(img, 10, 10);
+    }
+});
+
+document.getElementById('itensCarrinho').addEventListener('dragend',e=>{
+    const item = e.target.closest('.itemCarrinho');
+    if (item) item.classList.remove('dragging');
+    atualizarCarrinho();
+});
+
+document.getElementById('itensCarrinho').addEventListener('dragover',e=>{
+    e.preventDefault();
+    const after = e.target.closest('.itemCarrinho');
+    const parent = document.getElementById('itensCarrinho');
+    const draggedItem = parent.querySelector('.dragging');
+
+    if(after && draggedItem && after !== draggedItem){
+        const bounding = after.getBoundingClientRect();
+        const offset = e.clientY - bounding.top;
+        
+        if (offset > bounding.height / 2) {
+            parent.insertBefore(draggedItem, after.nextSibling);
+        } else {
+            parent.insertBefore(draggedItem, after);
+        }
+
+        const novosIndices = Array.from(parent.children).map(item => parseInt(item.dataset.index));
+        const novoCarrinho = novosIndices.map(index => carrinho[index]);
+        carrinho.splice(0, carrinho.length, ...novoCarrinho); 
+        
+        Array.from(parent.children).forEach((item, index) => {
+            item.dataset.index = index;
+        });
+    }
+});
+
+
+// ----------------------------------------------------
+// INICIALIZAÇÃO
+// ----------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+    loadCarrinho();
+    mostrarTodosProdutos(); 
+});
+</script>
+
+</body>
+</html>
