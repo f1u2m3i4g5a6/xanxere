@@ -1,269 +1,197 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Xanxerê Sustentável</title>
+<html lang="pt-BR"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Xanxerê Sustentável — Informativo &amp; Galeria</title>
+  <meta name="description" content="Portal informativo sobre reciclagem, gestão de resíduos, reflorestamento e iniciativas em Xanxerê. Galeria de imagens e chat comunitário.">
   <link rel="icon" type="image/png" href="xanxere.png">
-  <meta name="description" content="Portal informativo sobre reciclagem, gestão de resíduos, reflorestamento e indicadores em Xanxerê." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
   <style>
+    :root{
+      --bg-1:#07140e; --bg-2:#0b2116; --text:#f3faf5; --muted:#a7b9ae;
+      --accent:#69e28b; --line:rgba(255,255,255,.10);
+      --max-width:1180px; --card-radius:16px; --shadow-lg:0 20px 50px rgba(0,0,0,.42);
+      --focus:0 0 0 4px rgba(105,226,139,.12);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:var(--text);
+      background:
+        radial-gradient(circle at 10% 5%,rgba(105,226,139,.14),transparent 26rem),
+        radial-gradient(circle at 90% 15%,rgba(66,185,238,.09),transparent 28rem),
+        linear-gradient(180deg,var(--bg-1),var(--bg-2) 65%,#06110c);
+      -webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:48px;
+    }
 
-  :root{
-    --bg:#07140e; --bg2:#0b2116; --surface:rgba(18,38,27,.82);
-    --surface2:rgba(25,52,37,.78); --text:#f3faf5; --muted:#a7b9ae;
-    --accent:#69e28b; --accent2:#42b9ee; --line:rgba(255,255,255,.10);
-    --max-width:1180px; --radius:24px; --shadow:0 24px 70px rgba(0,0,0,.28);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    color:var(--text);background:
-      radial-gradient(circle at 10% 5%,rgba(105,226,139,.16),transparent 28rem),
-      radial-gradient(circle at 90% 15%,rgba(66,185,238,.12),transparent 30rem),
-      linear-gradient(180deg,var(--bg),var(--bg2) 60%,#06110c);
-    min-height:100vh;-webkit-font-smoothing:antialiased;
-  }
-  body:before{
-    content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
-    background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-    background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 82%);
-  }
-  header{
-    position:fixed;top:14px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:1180px;
-    padding:13px 16px 13px 20px;background:rgba(8,25,17,.78);backdrop-filter:blur(18px);
-    color:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 16px 50px rgba(0,0,0,.24);
-    z-index:1000;display:flex;align-items:center;gap:20px;
-  }
-  header>div:first-child{font-size:15px;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
-  header>div:first-child:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px rgba(105,226,139,.8)}
-  nav{margin-left:auto!important;display:flex;gap:4px!important}
-  nav a{color:#dbece0!important;text-decoration:none!important;padding:9px 12px;border-radius:11px;font-size:13px;transition:.2s ease}
-  nav a:hover{background:rgba(255,255,255,.08);color:#fff!important}
-  main{max-width:var(--max-width);margin:0 auto;padding:118px 18px 50px;display:grid;gap:22px;position:relative}
-  .card{
-    background:linear-gradient(145deg,rgba(21,44,31,.88),rgba(9,27,18,.78));
-    border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  }
-  section.card:first-child{
-    min-height:310px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;position:relative;
-    background:radial-gradient(circle at 84% 20%,rgba(105,226,139,.22),transparent 18rem),linear-gradient(135deg,rgba(25,60,40,.96),rgba(8,27,18,.92));
-  }
-  section.card:first-child:after{
-    content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-70px;bottom:-100px;
-    border:1px solid rgba(105,226,139,.18);box-shadow:0 0 0 35px rgba(105,226,139,.025),0 0 0 70px rgba(105,226,139,.02);
-  }
-  h1{font-size:clamp(36px,6vw,68px);line-height:.98;letter-spacing:-.045em;max-width:760px;margin:0 0 18px}
-  h2{font-size:25px;letter-spacing:-.025em;margin:0 0 6px} h3{font-size:19px;margin:0 0 12px} p{line-height:1.65}
-  .muted{color:var(--muted)!important}
-  .chart-wrap{
-    position:relative;min-height:280px;border-radius:18px!important;background:rgba(5,16,11,.38)!important;
-    border:1px solid rgba(255,255,255,.07)!important;overflow:hidden;
-  }
-  .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-  .note{background:rgba(10,27,18,.86);border:1px solid var(--line);padding:13px 17px;border-radius:14px;color:var(--muted);text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.22)}
-  #acoes>div{grid-template-columns:minmax(0,1fr) 300px!important}
-  #indicadores>div{grid-template-columns:1fr 1fr!important}
-  #media>div{grid-template-columns:minmax(0,1fr) 360px!important}
-  #acoes aside{display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,rgba(105,226,139,.10),rgba(255,255,255,.025))}
-  #media{overflow:hidden}
-  #videoGallery{
-    display:flex!important;gap:16px!important;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 18px;
-    scrollbar-width:thin;scrollbar-color:rgba(105,226,139,.45) transparent;
-  }
-  #videoGallery::-webkit-scrollbar{height:7px}
-  #videoGallery::-webkit-scrollbar-track{background:transparent}
-  #videoGallery::-webkit-scrollbar-thumb{background:rgba(105,226,139,.4);border-radius:99px}
-  .video-card{
-    flex:0 0 min(76%,390px);min-height:225px!important;aspect-ratio:16/10;border-radius:20px!important;
-    display:flex;align-items:flex-end!important;justify-content:flex-start!important;color:#fff;position:relative;overflow:hidden;
-    scroll-snap-align:start;border:1px solid rgba(255,255,255,.10);
-    background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.9)),linear-gradient(135deg,#153c27,#102b3a);
-    box-shadow:0 18px 40px rgba(0,0,0,.25);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;
-  }
-  .video-card:hover{transform:translateY(-4px);box-shadow:0 25px 55px rgba(0,0,0,.35)}
-  .video-card:before{
-    content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;
-    display:grid;place-items:center;padding-left:3px;background:rgba(105,226,139,.92);color:#082011;
-    box-shadow:0 0 0 8px rgba(105,226,139,.12),0 10px 30px rgba(0,0,0,.3)
-  }
-  .video-card>div{position:relative;z-index:2;padding:18px!important;font-size:16px;font-weight:700}
-  #media:after{content:"Deslize para ver mais";display:block;color:var(--muted);font-size:12px;margin-top:-10px}
-  .chat.card{background:rgba(5,16,11,.35);box-shadow:none;padding:14px}
-  #chatBox{height:300px;overflow:auto;padding:10px;border-radius:16px;background:rgba(0,0,0,.18);border:1px solid var(--line)}
-  .chat-msg{padding:11px 12px;border-radius:13px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.06);margin-bottom:8px}
-  input[type=text]{padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:#fff;outline:none;min-width:0}
-  input[type=text]:focus{border-color:rgba(105,226,139,.65);box-shadow:0 0 0 3px rgba(105,226,139,.08)}
-  input::placeholder{color:#718278}
-  .btn{background:linear-gradient(135deg,#69e28b,#39b86a);color:#062010;border:none;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:800;transition:.2s ease;box-shadow:0 8px 20px rgba(50,180,95,.2)}
-  .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
-  @media(max-width:980px){
-    main{padding-top:105px}
-    #acoes>div,#media>div{grid-template-columns:1fr!important}
-    #indicadores>div{grid-template-columns:1fr!important}
-  }
+    header{
+      position:sticky;top:12px;margin:12px auto;max-width:calc(var(--max-width)+36px);
+      background:linear-gradient(90deg, rgba(8,25,17,.88), rgba(5,18,12,.86));
+      padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.04);box-shadow:var(--shadow-lg);
+      display:flex;gap:16px;align-items:center;z-index:1200;margin-left:12px;margin-right:12px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
+    .brand .logo{width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-weight:800}
+    nav{margin-left:auto;display:flex;gap:8px;align-items:center}
+    nav a{color:#eaf7ed;text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
+    nav a:hover, nav a:focus{background:rgba(255,255,255,.04);outline:none;box-shadow:var(--focus)}
 
-  /* Camada premium */
-  .hero-kicker{
-    display:inline-flex;align-items:center;gap:8px;width:max-content;
-    padding:8px 12px;border:1px solid rgba(105,226,139,.22);border-radius:999px;
-    background:rgba(105,226,139,.07);color:#b9f2c8;font-size:12px;font-weight:700;
-    letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px;
-  }
-  .hero-kicker:before{content:"✦";color:var(--accent)}
-  .hero-sub{max-width:700px;font-size:16px}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-  .hero-actions a{
-    text-decoration:none;padding:11px 15px;border-radius:12px;font-size:13px;font-weight:800;
-    border:1px solid var(--line);color:#eaf7ed;background:rgba(255,255,255,.045);transition:.2s;
-  }
-  .hero-actions a.primary{background:linear-gradient(135deg,#69e28b,#39b86a);color:#062010;border-color:transparent}
-  .hero-actions a:hover{transform:translateY(-2px);filter:brightness(1.06)}
-  .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:14px}
-  .section-head p{margin:0;max-width:640px}
-  .section-tag{font-size:11px;color:#b9f2c8;text-transform:uppercase;letter-spacing:.12em;font-weight:800}
-  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-  .metric{
-    padding:16px;border:1px solid var(--line);border-radius:17px;
-    background:linear-gradient(145deg,rgba(105,226,139,.08),rgba(255,255,255,.025));
-  }
-  .metric strong{display:block;font-size:23px;margin-bottom:4px}
-  .metric span{font-size:12px;color:var(--muted)}
-  .info-pill{
-    display:inline-flex;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.055);
-    color:var(--muted);font-size:11px;margin-top:8px
-  }
-  .media-top{
-    display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:8px
-  }
-  .carousel-controls{display:flex;gap:7px}
-  .carousel-controls button{
-    width:38px;height:38px;border-radius:12px;border:1px solid var(--line);
-    background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:16px;transition:.2s
-  }
-  .carousel-controls button:hover{background:rgba(105,226,139,.14);border-color:rgba(105,226,139,.35)}
-  .project-credit{
-    text-align:center;padding:28px 20px 10px;color:var(--muted);font-size:12px
-  }
-  .project-credit .names{
-    color:#eaf7ed;font-size:14px;font-weight:800;letter-spacing:.01em;margin-bottom:6px
-  }
-  .project-credit .org{color:#9edaae}
-  footer{
-    max-width:var(--max-width);margin:0 auto;padding:0 18px 34px
-  }
-  .footer-card{
-    border:1px solid var(--line);border-radius:22px;padding:24px;text-align:center;
-    background:linear-gradient(145deg,rgba(105,226,139,.07),rgba(255,255,255,.025));
-  }
-  .footer-title{font-weight:800;color:#eef9f1;margin-bottom:5px}
-  .footer-small{font-size:11px;color:#82988a}
-  @media(max-width:700px){
-    .metric-grid{grid-template-columns:1fr}
-    .section-head{align-items:start;flex-direction:column}
-    .media-top{align-items:start}
-  }
+    main{max-width:var(--max-width);margin:28px auto;padding:20px;display:grid;gap:20px}
 
-  @media(max-width:620px){
-    header{padding:10px 12px} header>div:first-child{font-size:13px} nav a{padding:8px 7px;font-size:11px}
-    main{padding:95px 12px 30px;gap:15px}.card{padding:17px;border-radius:19px}
-    section.card:first-child{min-height:340px} h1{font-size:42px}
-    .video-card{flex-basis:86%;min-height:205px!important}
-    #chatBox{height:250px}
-  }
+    .card{
+      background:linear-gradient(145deg,rgba(21,44,31,.9),rgba(10,27,18,.88));
+      border-radius:var(--card-radius);padding:18px;border:1px solid rgba(255,255,255,.04);
+      box-shadow:0 10px 30px rgba(0,0,0,.36);backdrop-filter:blur(8px)
+    }
 
+    .hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:28px;border-radius:18px;overflow:hidden}
+    .kicker{display:inline-flex;gap:10px;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(105,226,139,.06);color:#cdefd3;font-weight:800;font-size:12px}
+    h1{margin:12px 0 12px;font-size:clamp(28px,4.6vw,48px);line-height:1}
+    p.lead{margin:0;color:var(--muted);font-size:15px;max-width:66ch}
+
+    .two-col{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+    .two-equal{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    .chart-wrap{position:relative;min-height:260px;border-radius:12px;overflow:hidden;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.03)}
+    .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .note{background:rgba(10,27,18,.86);border:1px solid var(--line);padding:13px 17px;border-radius:14px;color:var(--muted);text-align:center}
+
+    /* Gallery */
+    .gallery{display:flex;flex-direction:column;gap:12px}
+    .viewport{position:relative;overflow:hidden;border-radius:12px;min-height:280px;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));border:1px solid rgba(255,255,255,.03)}
+    .slides{display:flex;transition:transform 420ms cubic-bezier(.2,.9,.35,1);will-change:transform}
+    .slide{min-width:100%;display:grid;place-items:center;padding:22px}
+    .slide img{max-width:100%;max-height:600px;object-fit:contain;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+    .thumbs{display:flex;gap:10px;overflow:auto;padding-bottom:6px}
+    .thumb{min-width:96px;height:96px;border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:transform .18s,border-color .18s}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb.active{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+
+    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);color:#fff;border:none;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;cursor:pointer}
+    .carousel-btn.prev{left:12px}.carousel-btn.next{right:12px}
+    .carousel-btn:focus{box-shadow:var(--focus);outline:none}
+
+    .media-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+    .media-item{min-width:min(78%,420px);border-radius:12px;overflow:hidden;flex:0 0 auto;scroll-snap-align:start;position:relative;background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.18));border:1px solid rgba(255,255,255,.03)}
+    .media-item img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* Chat */
+    .chat{display:flex;flex-direction:column;gap:10px}
+    #chatBox{height:300px;overflow:auto;padding:12px;border-radius:12px;background:rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.03)}
+    .chat-msg{padding:10px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.02);margin-bottom:8px}
+    .chat-controls{display:flex;gap:8px;align-items:center;margin-top:6px}
+
+    input[type=text]{padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(0,0,0,.12);color:var(--text)}
+    input[type=text]:focus{outline:none;box-shadow:var(--focus);border-color:rgba(105,226,139,.65)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:800;color:#062010;background:linear-gradient(135deg,var(--accent),#39b86a);box-shadow:0 8px 20px rgba(50,180,95,.15)}
+
+    footer{max-width:var(--max-width);margin:20px auto;padding:12px}
+    .footer-card{border-radius:12px;padding:18px;text-align:center;background:linear-gradient(145deg,rgba(105,226,139,.07),rgba(255,255,255,.025));border:1px solid var(--line)}
+
+    @media(max-width:980px){.two-col{grid-template-columns:1fr}.hero-left{max-width:100%}nav{display:none}}
+    @media(max-width:620px){.thumb{min-width:72px;height:72px}.media-item{min-width:86%}}
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);z-index:1500;padding:20px}
+    .modal.open{display:flex}
+    .modal .box{width:min(1100px,96%);max-height:90vh;background:#000;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .modal video,.modal img{width:100%;height:100%;display:block;object-fit:contain}
+    .modal .close{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.06);border:none;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer}
   </style>
-</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" async=""></script></head>
 <body>
-  <header>
-    <div style="font-weight:700">Xanxerê Sustentável</div>
-    <nav style="margin-left:auto;display:flex;gap:10px">
-      <a style="color:#fff;text-decoration:none" href="#acoes">Ações</a>
-      <a style="color:#fff;text-decoration:none" href="#indicadores">Indicadores</a>
-      <a style="color:#fff;text-decoration:none" href="#media">Mídia</a>
+  <header role="banner" aria-label="Cabeçalho">
+    <div class="brand"><div class="logo" aria-hidden="true">XS</div>Xanxerê Sustentável</div>
+    <nav role="navigation" aria-label="Menu principal">
+      <a href="#acoes">Ações</a>
+      <a href="#indicadores">Indicadores</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#media">Mídia</a>
     </nav>
   </header>
 
-  <main>
-    <section class="card">
-      <div class="hero-kicker">Projeto de educação e sustentabilidade</div>
-      <h1>Preservar o meio ambiente é uma escolha.</h1>
-      <p class="muted hero-sub">E essa escolha começa com cada um de nós. Um espaço para conhecer ações, acompanhar indicadores e valorizar iniciativas de sustentabilidade em Xanxerê.</p>
-      <div class="hero-actions">
-        <a class="primary" href="#acoes">Explorar ações</a>
-        <a href="#indicadores">Ver indicadores</a>
-        <a href="#media">Ver galeria</a>
+  <main role="main">
+    <section class="card hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <div class="kicker">Projeto local</div>
+        <h1 id="hero-title">Preservar o meio ambiente é uma escolha.</h1>
+        <p class="lead muted">E essa escolha começa com cada um de nós. Um espaço para ações, indicadores e uma galeria visual que você alimenta manualmente.</p>
+        <div style="margin-top:14px"><a class="btn" href="#acoes">Explorar Ações</a> <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,.04);color:#eaf7ed;margin-left:8px" href="#media">Ver Galeria</a></div>
+      </div>
+      <div aria-hidden="true" style="width:320px;display:flex;flex-direction:column;gap:12px;align-items:flex-end">
+        <div style="background:linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.03);width:100%;text-align:right">
+          <div style="font-weight:800;font-size:18px">Xanxerê • 2026</div>
+          <div class="muted" style="font-size:12px">Dados informativos e galeria manual</div>
+        </div>
+        <div style="width:100%;height:100px;border-radius:12px;background:linear-gradient(135deg,rgba(105,226,139,.06),rgba(66,185,238,.04));border:1px solid rgba(255,255,255,.02)"></div>
       </div>
     </section>
 
-    <section id="acoes" class="card">
-      <div class="section-head">
-        <div>
-          <div class="section-tag">Ações locais</div>
-          <h2>Reciclagem & Gestão de Resíduos</h2>
-          <p class="muted">Informação para transformar pequenas atitudes em hábitos sustentáveis.</p>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 320px;gap:12px;margin-top:12px">
-        <div class="card chart-wrap">
-          <canvas id="chartReciclagem"></canvas>
-          <div id="ovReciclagem" class="overlay"><div class="note">Aguardando dados de reciclagem — preencha dataxanxere-2026.json</div></div>
+    <section id="acoes" class="card" aria-labelledby="acoes-title">
+      <h2 id="acoes-title">Reciclagem &amp; Gestão de Resíduos</h2>
+      <p class="muted">Dicas práticas e indicadores — adicione valores no arquivo <strong>dataxanxere-2026.json</strong>.</p>
+      <div class="two-col" style="margin-top:12px">
+        <div class="chart-wrap">
+          <h3 style="margin:14px 18px 6px">Reciclagem — indicadores</h3>
+          <canvas id="chartReciclagem" style="width:100%;height:220px" aria-label="Gráfico de reciclagem"></canvas>
+          <div id="ovReciclagem" class="overlay"><div class="note">Aguardando dados — preencha dataxanxere-2026.json (chave: reciclagem)</div></div>
         </div>
         <aside class="card">
           <strong>Como participar</strong>
-          <p class="muted">Separe resíduos, leve a pontos de coleta e participe de campanhas.</p>
+          <p class="muted">Separe resíduos, use pontos de coleta e participe das campanhas locais.</p>
         </aside>
       </div>
     </section>
 
     <section id="indicadores" class="card">
-      <div class="section-head">
-        <div>
-          <div class="section-tag">Dados e acompanhamento</div>
-          <h2>Indicadores</h2>
-          <p class="muted">Visualize os dados disponíveis e acompanhe a evolução dos principais indicadores ambientais.</p>
+      <h2>Indicadores</h2>
+      <p class="muted">Coleta de lixo e índices de poluição (carregados localmente).</p>
+      <div class="two-equal" style="margin-top:12px">
+        <div class="chart-wrap">
+          <h3 style="margin:14px 18px 6px">Coleta de Lixo</h3>
+          <canvas id="chartLixo" style="width:100%;height:220px" aria-label="Gráfico de coleta de lixo"></canvas>
+          <div id="ovLixo" class="overlay"><div class="note">Aguardando dados</div></div>
+        </div>
+        <div class="chart-wrap">
+          <h3 style="margin:14px 18px 6px">Poluições</h3>
+          <canvas id="chartPoluicoes" style="width:100%;height:220px" aria-label="Gráfico de poluições"></canvas>
+          <div id="ovPoluicoes" class="overlay"><div class="note">Aguardando dados</div></div>
         </div>
       </div>
-      <div class="metric-grid">
-        <div class="metric"><strong>♻</strong><span>Reciclagem e reaproveitamento</span></div>
-        <div class="metric"><strong>◌</strong><span>Gestão de resíduos</span></div>
-        <div class="metric"><strong>⌁</strong><span>Acompanhamento da poluição</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
-        <div class="card chart-wrap"><canvas id="chartLixo"></canvas><div id="ovLixo" class="overlay"><div class="note">Aguardando dados</div></div></div>
-        <div class="card chart-wrap"><canvas id="chartPoluicoes"></canvas><div id="ovPoluicoes" class="overlay"><div class="note">Aguardando dados</div></div></div>
+    </section>
+
+    <section id="galeria" class="card" aria-labelledby="galeria-title">
+      <h2 id="galeria-title">Galeria de Imagens &amp; Vídeos</h2>
+      <p class="muted">Adicione suas imagens em <code>images</code> ou vídeos em <code>videos</code> no JSON. Os arquivos (por exemplo <code>ifa.mp4</code>) devem ficar disponíveis no mesmo diretório ou em URLs públicas.</p>
+
+      <div class="gallery" style="margin-top:12px">
+        <div class="viewport" aria-live="polite">
+          <button class="carousel-btn prev" aria-label="Anterior">‹</button>
+          <div class="slides" id="slides" role="list"></div>
+          <button class="carousel-btn next" aria-label="Próximo">›</button>
+        </div>
+        <div class="thumbs" id="thumbs" role="listbox" aria-label="Miniaturas"></div>
       </div>
     </section>
 
     <section id="media" class="card">
-      <div style="display:grid;grid-template-columns:1fr 360px;gap:12px">
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start">
         <div>
-          <div class="media-top">
-            <div>
-              <div class="section-tag">Galeria</div>
-              <h3>Imagens & Vídeos</h3>
-            </div>
-            <div class="carousel-controls">
-              <button id="mediaPrev" type="button" aria-label="Mídia anterior">←</button>
-              <button id="mediaNext" type="button" aria-label="Próxima mídia">→</button>
-            </div>
-          </div>
-          <p class="muted" style="margin-top:0">Adicione suas imagens e vídeos manualmente no arquivo <strong>dataxanxere-2026.json</strong>.</p>
-          <div id="videoGallery" class="video-grid" style="margin-top:12px"></div>
+          <h3>Imagens e Vídeos (manuais)</h3>
+          <p class="muted">Os itens abaixo são carregados do JSON local; clique para abrir ou reproduzir.</p>
+          <div id="videoGallery" class="media-grid" style="margin-top:12px"></div>
         </div>
 
         <aside>
           <h3>Chat Comunitário</h3>
-          <div class="chat card">
+          <div class="chat card" role="region" aria-label="Chat">
             <div id="chatBox" aria-live="polite"></div>
-            <div style="display:flex;gap:8px">
-              <input id="displayName" type="text" placeholder="Seu nome (opcional)" style="width:140px"/>
-              <input id="messageInput" type="text" placeholder="Mensagem pública" style="flex:1"/>
-              <button id="sendBtn" class="btn">Enviar</button>
+            <div class="chat-controls">
+              <input id="displayName" type="text" placeholder="Seu nome (opcional)" aria-label="Seu nome">
+              <input id="messageInput" type="text" placeholder="Mensagem pública" aria-label="Mensagem">
+              <button id="sendBtn" class="btn" aria-label="Enviar">Enviar</button>
             </div>
-            <div class="muted">Mensagens públicas. Evite dados sensíveis.</div>
+            <div class="muted" style="margin-top:8px">Autenticação anônima usada para envio — habilite no Firebase Console.</div>
           </div>
         </aside>
       </div>
@@ -271,55 +199,228 @@
   </main>
 
   <footer>
-    <div class="footer-card">
-      <div class="footer-title">Xanxerê Sustentável</div>
-      <div class="project-credit">
-        <div class="names">Projeto desenvolvido por Janio Victor e Gabriela Castanha</div>
-        <div class="org">Organizado por IFA e Escola Costa e Silva</div>
+    <div class="card footer-card" style="max-width:var(--max-width);margin:12px auto">
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+        <div style="font-weight:800;font-size:16px">Xanxerê Sustentável</div>
+        <div class="muted" style="font-size:13px">Educação • Sustentabilidade • Comunidade</div>
       </div>
-      <div class="footer-small">Educação • Sustentabilidade • Comunidade • Xanxerê</div>
     </div>
   </footer>
+
+  <!-- Modal for images/videos -->
+  <div id="mediaModal" class="modal" role="dialog" aria-hidden="true" aria-label="Visualizador de mídia">
+    <button class="close" id="modalClose" aria-label="Fechar">✕</button>
+    <div class="box" role="document">
+      <video id="mediaPlayer" controls="" playsinline="" style="display:none;background:#000"></video>
+      <img id="mediaImage" alt="" style="display:none">
+    </div>
+  </div>
 
   <!-- Chart.js UMD CDN com fallback local -->
   <script>
     (function loadChart(){
       const cdn = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
       const local = './vendor/chart.umd.min.js';
-      function append(src){ return new Promise((r,re)=>{ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=r; s.onerror=re; document.head.appendChild(s); }); }
+      function append(src){ return new Promise((res,re)=>{ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=res; s.onerror=re; document.head.appendChild(s); }); }
       append(cdn).catch(()=>append(local).catch(()=>console.warn('Chart.js não carregou.')));
     })();
   </script>
 
   <script type="module">
-    // IMPORT: firebase-app.js must be present in the same folder.
     import firebaseApp from './firebase-app.js';
-
-    // initialize Firebase but DO NOT auto-sign-in
     firebaseApp.initFirebase(undefined, { enableAnalytics:false, signInAnon:false });
 
-    // Rate limit: 5 messages / 60s (local)
-    const RATE_LIMIT_KEY = 'chat_rate'; const RATE_LIMIT_MAX = 5; const RATE_LIMIT_WINDOW_MS = 60*1000;
-    function canSendMessage(){
-      try{
-        const item = JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) || '{"times":[]}');
-        const now = Date.now();
-        item.times = item.times.filter(t => (now - t) < RATE_LIMIT_WINDOW_MS);
-        if(item.times.length >= RATE_LIMIT_MAX) return false;
-        item.times.push(now); localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(item)); return true;
-      }catch(e){ return true; }
+    // ---------------- media loading + "ifa.mp4" integration ----------------
+    async function loadMediaData(){
+      try {
+        const r = await fetch('./dataxanxere-2026.json', { cache: 'no-store' });
+        if (!r.ok) return {};
+        return await r.json();
+      } catch(e) { console.warn('JSON local não encontrado', e); return {}; }
     }
 
-    function isAllowedMessage(text){
-      if(!text) return false;
-      const t = text.toLowerCase();
-      if(t.length > 1000) return false;
-      const block = ['http://','https://','<script','spam','buy now'];
-      for(const p of block) if(t.includes(p)) return false;
-      return true;
+    (async function initMedia(){
+      const data = await loadMediaData();
+
+      // Normalize arrays
+      const images = Array.isArray(data.images) ? data.images.map(i => (typeof i === 'string' ? { url:i } : i)) : (Array.isArray(data.imagens) ? data.imagens.map(i => (typeof i==='string'?{url:i}:i)) : []);
+      const videos = Array.isArray(data.videos) ? data.videos.map(v => (v.videoUrl || v.embedUrl || v.url ? { ...(v), url: v.videoUrl || v.embedUrl || v.url } : v)) : [];
+
+      // Force-add IFA video (explicit request) if not already present
+      const ifaUrl = 'ifa.mp4'; // file placed alongside site
+      const ifaPresent = videos.some(v => (v.url || '').includes('ifa.mp4')) || images.some(i => (i.url || '').includes('ifa.mp4'));
+      if (!ifaPresent) {
+        videos.unshift({ title: 'IFA — Vídeo Institucional', url: ifaUrl, thumbUrl: 'ifa.png', type: 'video' });
+      }
+
+      // Build combined media list (videos first then images)
+      const mediaItems = [
+        ...videos.map(v => ({ ...v, type: 'video' })),
+        ...images.map(i => ({ ...i, type: 'image' }))
+      ];
+
+      buildGallery(mediaItems);
+      buildMediaGrid(mediaItems);
+    })();
+
+    // Build gallery slides & thumbs
+    function buildGallery(items){
+      const slides = document.getElementById('slides');
+      const thumbs = document.getElementById('thumbs');
+      slides.innerHTML = ''; thumbs.innerHTML = '';
+      const total = items.length || 1;
+
+      items.forEach((it, i) => {
+        const slide = document.createElement('div'); slide.className = 'slide';
+        if (it.type === 'image' && it.url) {
+          const img = document.createElement('img'); img.src = it.url; img.alt = it.title || `Imagem ${i+1}`; img.loading = 'lazy';
+          slide.appendChild(img);
+        } else if (it.type === 'video' && it.url) {
+          const poster = it.thumbUrl || it.poster || '';
+          const img = document.createElement('img'); img.src = poster || ''; img.alt = it.title || `Vídeo ${i+1}`; img.loading = 'lazy';
+          // If no poster, show a subtle gradient
+          if (!poster) img.style.background = 'linear-gradient(135deg,#153c27,#102b3a)';
+          slide.appendChild(img);
+        } else {
+          const ph = document.createElement('div'); ph.className = 'note'; ph.textContent = 'Nenhuma mídia encontrada.';
+          slide.appendChild(ph);
+        }
+        slides.appendChild(slide);
+
+        const thumb = document.createElement('button'); thumb.className = 'thumb'; thumb.type = 'button'; thumb.setAttribute('aria-label', it.title || `Item ${i+1}`);
+        const thumbImg = document.createElement('img'); thumbImg.src = it.thumbUrl || it.url || ''; thumbImg.alt = it.title || '';
+        thumb.appendChild(thumbImg);
+        thumb.addEventListener('click', () => goTo(i));
+        thumbs.appendChild(thumb);
+      });
+
+      // Carousel controls and logic
+      let idx = 0;
+      function update(){
+        slides.style.transform = `translateX(${-idx * 100}%)`;
+        Array.from(thumbs.children).forEach((c, i) => c.classList.toggle('active', i === idx));
+      }
+      function prev(){ idx = (idx - 1 + total) % total; update(); }
+      function next(){ idx = (idx + 1) % total; update(); }
+      function goTo(i){ idx = i % total; update(); }
+
+      document.querySelectorAll('.carousel-btn.prev').forEach(b => b.addEventListener('click', prev));
+      document.querySelectorAll('.carousel-btn.next').forEach(b => b.addEventListener('click', next));
+      document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') prev(); else if (e.key === 'ArrowRight') next(); });
+
+      // autoplay with pause on hover
+      let timer = setInterval(next, 4500);
+      const viewport = document.querySelector('.viewport');
+      viewport?.addEventListener('mouseenter', () => clearInterval(timer));
+      viewport?.addEventListener('mouseleave', () => timer = setInterval(next, 4500));
+
+      update();
     }
 
-    /* Chat (Firebase only for chat) */
+    // Build horizontal media grid (click opens modal for video/image)
+    function buildMediaGrid(items){
+      const grid = document.getElementById('videoGallery');
+      grid.innerHTML = '';
+
+      items.forEach((it, i) => {
+        const item = document.createElement('div'); item.className = 'media-item'; item.tabIndex = 0;
+        if (it.type === 'image' && it.url) {
+          const img = document.createElement('img'); img.src = it.url; img.alt = it.title || `Imagem ${i+1}`; item.appendChild(img);
+        } else if (it.type === 'video' && it.url) {
+          const poster = it.thumbUrl || it.poster || '';
+          const img = document.createElement('img'); img.src = poster || ''; img.alt = it.title || `Vídeo ${i+1}`; img.style.objectFit = 'cover';
+          if (!poster) img.style.background = 'linear-gradient(135deg,#153c27,#102b3a)';
+          item.appendChild(img);
+          const badge = document.createElement('div'); badge.style.position='absolute'; badge.style.left='12px'; badge.style.bottom='12px'; badge.style.padding='8px 10px'; badge.style.borderRadius='10px'; badge.style.background='rgba(0,0,0,.5)'; badge.style.fontWeight='800'; badge.innerText = '▶ Vídeo'; item.appendChild(badge);
+        } else {
+          const note = document.createElement('div'); note.className='note'; note.textContent = 'Nenhuma mídia definida.'; item.appendChild(note);
+        }
+
+        // click handler: if video plays modal, if image opens modal enlarged
+        item.addEventListener('click', () => openMedia(it));
+        item.addEventListener('keydown', e => { if (e.key === 'Enter') openMedia(it); });
+        grid.appendChild(item);
+      });
+    }
+
+    // Modal open for media (video or image)
+    const modal = document.getElementById('mediaModal');
+    const player = document.getElementById('mediaPlayer');
+    const imgView = document.getElementById('mediaImage');
+    const modalClose = document.getElementById('modalClose');
+
+    function openMedia(it){
+      if (!it || (!it.url)) return;
+      const url = it.url;
+      if (url.endsWith('.mp4') || url.includes('.mp4')) {
+        imgView.style.display = 'none';
+        player.style.display = 'block';
+        player.src = url;
+        player.currentTime = 0;
+        player.play().catch(()=>{});
+      } else {
+        player.pause(); player.style.display = 'none'; player.src = '';
+        imgView.style.display = 'block';
+        imgView.src = url;
+        imgView.alt = it.title || '';
+      }
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+    }
+
+    function closeModal(){
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+      try{ player.pause(); player.src = ''; }catch(e){}
+      imgView.src = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // ---------------- Charts (local JSON only) ----------------
+    async function populateCharts(){
+      let data = {};
+      try { const r = await fetch('./dataxanxere-2026.json', { cache: 'no-store' }); if (r.ok) data = await r.json(); } catch(e){ console.warn('JSON local não encontrado', e); }
+
+      const ensureChart = (id, type, labels, dataset, options = {}) => {
+        const el = document.getElementById(id); if (!el || !window.Chart) return;
+        try { new Chart(el.getContext('2d'), { type, data: { labels, datasets: [dataset] }, options: Object.assign({ responsive:true, maintainAspectRatio:false }, options) }); } catch(err) { console.warn('Erro Chart', err); }
+      };
+
+      if (Array.isArray(data.reciclagem) && data.reciclagem.length) {
+        document.getElementById('ovReciclagem').style.display = 'none';
+        ensureChart('chartReciclagem', 'bar', data.reciclagem.map(d => d.label), { label:'Taxa de Reciclagem (%)', data: data.reciclagem.map(d => d.value), backgroundColor:'#69e28b' });
+      }
+      const residuos = data.residuos || data.lixo || [];
+      if (Array.isArray(residuos) && residuos.length) {
+        document.getElementById('ovLixo').style.display = 'none';
+        ensureChart('chartLixo', 'doughnut', residuos.map(d => d.label), { data: residuos.map(d => d.value), backgroundColor:['#70bf7a','#f6d365','#6b4f3a'] });
+      }
+      if (Array.isArray(data.poluicoes) && data.poluicoes.length) {
+        document.getElementById('ovPoluicoes').style.display = 'none';
+        ensureChart('chartPoluicoes', 'line', data.poluicoes.map(d => d.label), { label:'Índice de Poluição', data: data.poluicoes.map(d => d.value), borderColor:'#d9534f', backgroundColor:'rgba(217,83,79,0.08)' });
+      }
+
+      const newsList = document.getElementById('newsList');
+      if (newsList && Array.isArray(data.noticias) && data.noticias.length) {
+        data.noticias.forEach(n => {
+          const art = document.createElement('article'); art.className = 'card'; art.style.marginBottom = '10px';
+          art.innerHTML = `<strong>${n.title || ''}</strong><p class="muted">${n.summary || ''}</p>`;
+          newsList.appendChild(art);
+        });
+      } else if (newsList) {
+        newsList.innerHTML = '<div class="muted">Nenhuma notícia disponível.</div>';
+      }
+    }
+
+    (function waitForChart() {
+      let tries = 20, i = 0;
+      const t = setInterval(() => {
+        if (window.Chart || ++i > tries) { clearInterval(t); populateCharts().catch(()=>{}); }
+      }, 200);
+    })();
+
+    // ---------------- Chat (Firebase only) ----------------
     (async function initChat(){
       const chatBox = document.getElementById('chatBox');
       const sendBtn = document.getElementById('sendBtn');
@@ -327,136 +428,53 @@
       const nameInput = document.getElementById('displayName');
 
       async function ensureAuth(){
-        try{ await firebaseApp.signInAnonymouslyIfNeeded(); return true; }
-        catch(e){ console.warn('Auth anon falhou', e); return false; }
+        try { await firebaseApp.signInAnonymouslyIfNeeded(); return true; }
+        catch(e) { console.warn('Auth anon falhou', e); return false; }
       }
 
       function renderMessages(msgs){
         chatBox.innerHTML = '';
-        msgs.forEach(m=>{
-          const el = document.createElement('div'); el.className='chat-msg';
-          const a = document.createElement('div'); a.style.fontWeight='700'; a.textContent = m.author || 'Visitante';
-          const t = document.createElement('div'); t.textContent = m.text || '';
+        msgs.forEach(m => {
+          const el = document.createElement('div'); el.className = 'chat-msg';
+          const header = document.createElement('div'); header.style.fontWeight='700'; header.textContent = m.author || 'Visitante';
+          const text = document.createElement('div'); text.textContent = m.text || '';
           const time = document.createElement('div'); time.style.fontSize='12px'; time.style.color='var(--muted)';
           const d = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate() : (m.createdAt ? new Date(m.createdAt.seconds*1000) : null);
           time.textContent = d ? d.toLocaleString() : '';
-          el.appendChild(a); el.appendChild(t); el.appendChild(time); chatBox.appendChild(el);
+          el.appendChild(header); el.appendChild(text); el.appendChild(time);
+          chatBox.appendChild(el);
         });
         chatBox.scrollTop = chatBox.scrollHeight;
       }
 
       const authOk = await ensureAuth();
-      if(authOk){
+      if (authOk) {
         firebaseApp.listenChat({ municipio:'xanxere', onUpdate: renderMessages, limitSize: 300 });
       } else {
-        chatBox.innerHTML = '<div class="muted">Chat indisponível: ative Autenticação Anônima no Firebase Console.</div>';
+        chatBox.innerHTML = '<div class="muted">Chat indisponível: habilite Autenticação Anônima no Firebase Console.</div>';
       }
 
-      sendBtn.addEventListener('click', async ()=>{
-        const text = msgInput.value; if(!text || text.trim()==='') return;
-        if(!isAllowedMessage(text)){ alert('Mensagem bloqueada por política.'); return; }
-        if(!canSendMessage()){ alert('Você enviou muitas mensagens. Aguarde.'); return; }
-        const name = nameInput.value && nameInput.value.trim() ? nameInput.value.trim() : 'Visitante';
+      const KEY='chat_rate_v1', MAX=5, WINDOW=60*1000;
+      function canSend(){ try{ const s = JSON.parse(localStorage.getItem(KEY) || '{"t":[]}'); const now = Date.now(); s.t = s.t.filter(x => (now - x) < WINDOW); if (s.t.length >= MAX) return false; s.t.push(now); localStorage.setItem(KEY, JSON.stringify(s)); return true;}catch(e){return true;} }
+      function messageAllowed(text){ if(!text) return false; if(text.length>1000) return false; const block = ['http://','https://','<script','spam','buy now']; const t=text.toLowerCase(); return !block.some(b => t.includes(b)); }
+
+      sendBtn.addEventListener('click', async () => {
+        const text = (msgInput.value || '').trim(); if (!text) return;
+        if (!messageAllowed(text)) return alert('Mensagem bloqueada por política local.');
+        if (!canSend()) return alert('Você enviou muitas mensagens. Aguarde alguns instantes.');
         sendBtn.disabled = true;
-        try{
+        const name = (nameInput.value || 'Visitante').trim();
+        try {
           const ok = await ensureAuth();
-          if(!ok){ alert('Não autenticado — chat indisponível.'); return; }
+          if(!ok){ alert('Não autenticado. Ative Anonymous Auth no Firebase.'); return; }
           await firebaseApp.sendChatMessage({ municipio:'xanxere', author: name, text });
           msgInput.value = '';
-        } catch(err){ console.error('Erro enviar', err); alert('Erro ao enviar mensagem'); }
-        finally{ sendBtn.disabled = false; }
+        } catch(e) { console.error(e); alert('Erro ao enviar mensagem'); }
+        finally { sendBtn.disabled = false; }
       });
-
-      msgInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendBtn.click(); } });
+      msgInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendBtn.click(); } });
     })();
 
-    /* Populate site from local JSON only (no Firestore reads) */
-    async function populateSite(){
-      let data = {};
-      try{
-        const resp = await fetch('./dataxanxere-2026.json', {cache:'no-store'});
-        if(resp.ok) data = await resp.json();
-      }catch(e){ console.warn('JSON local não encontrado', e); }
-
-      // Reciclagem
-      if(data.reciclagem && data.reciclagem.length>0 && window.Chart){
-        document.getElementById('ovReciclagem').style.display='none';
-        const ctx = document.getElementById('chartReciclagem').getContext('2d');
-        new Chart(ctx, { type:'bar', data:{ labels:data.reciclagem.map(d=>d.label), datasets:[{ label:'Taxa de Reciclagem (%)', data:data.reciclagem.map(d=>d.value), backgroundColor:'#2f8f4a' }] }, options:{responsive:true,maintainAspectRatio:false} });
-      }
-
-      // Resíduos
-      const residuos = data.residuos || [];
-      if(residuos && residuos.length>0 && window.Chart){
-        document.getElementById('ovLixo').style.display='none';
-        const ctx = document.getElementById('chartLixo').getContext('2d');
-        new Chart(ctx, { type:'doughnut', data:{ labels:residuos.map(d=>d.label), datasets:[{ data:residuos.map(d=>d.value), backgroundColor:['#70bf7a','#f6d365','#6b4f3a'] }] }, options:{responsive:true,maintainAspectRatio:false} });
-      }
-
-      // Poluições
-      if(data.poluicoes && data.poluicoes.length>0 && window.Chart){
-        document.getElementById('ovPoluicoes').style.display='none';
-        const ctx = document.getElementById('chartPoluicoes').getContext('2d');
-        new Chart(ctx, { type:'line', data:{ labels:data.poluicoes.map(d=>d.label), datasets:[{ label:'Índice de Poluição', data:data.poluicoes.map(d=>d.value), borderColor:'#d9534f', backgroundColor:'rgba(217,83,79,0.08)', tension:0.3 }] }, options:{responsive:true,maintainAspectRatio:false} });
-      }
-
-      // Notícias
-      const newsList = document.getElementById('newsList');
-      if(data.noticias && data.noticias.length>0){
-        data.noticias.forEach(n=>{
-          const a = document.createElement('article'); a.className='card'; a.style.marginBottom='10px';
-          a.innerHTML = `<strong>${n.title||''}</strong><p class="muted">${n.summary||''}</p>`;
-          newsList.appendChild(a);
-        });
-      } else {
-        newsList.innerHTML = '<div class="muted">Nenhuma notícia disponível.</div>';
-      }
-
-      // Mídia local: imagens e vídeos definidos manualmente no JSON.
-      const videoGallery = document.getElementById('videoGallery');
-      const mediaItems = [
-        ...(Array.isArray(data.videos) ? data.videos.map(v => ({...v, type:'video'})) : []),
-        ...(Array.isArray(data.imagens) ? data.imagens.map(i => ({...i, type:'image'})) : []),
-        ...(Array.isArray(data.images) ? data.images.map(i => ({...i, type:'image'})) : [])
-      ];
-
-      if(mediaItems.length){
-        mediaItems.forEach((m, index)=>{
-          const card = document.createElement('div');
-          card.className = 'video-card';
-          card.setAttribute('role','button');
-          card.setAttribute('tabindex','0');
-
-          const title = m.title || (m.type === 'image' ? `Imagem ${index+1}` : `Vídeo ${index+1}`);
-          const src = m.url || m.src || m.embedUrl || m.image || '';
-
-          if(m.type === 'image' && src){
-            card.style.backgroundImage = `linear-gradient(180deg,transparent 25%,rgba(0,0,0,.9)),url("${src}")`;
-            card.style.backgroundSize = 'cover';
-            card.style.backgroundPosition = 'center';
-          }
-
-          card.innerHTML = `<div>${title}</div>`;
-          card.addEventListener('click', ()=> { if(src) window.open(src,'_blank','noopener,noreferrer'); });
-          card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); card.click(); }});
-          videoGallery.appendChild(card);
-        });
-      } else {
-        videoGallery.innerHTML = '<div class="note" style="width:100%">Adicione seus vídeos em <strong>videos</strong> ou suas imagens em <strong>imagens</strong> no JSON.</div>';
-      }
-    }
-
-    populateSite().catch(err=>console.error('populateSite', err));
-
-    // Controles do carrossel de mídia.
-    const mediaGallery = document.getElementById('videoGallery');
-    document.getElementById('mediaPrev')?.addEventListener('click', () => {
-      mediaGallery?.scrollBy({left: -(mediaGallery.clientWidth * .78), behavior:'smooth'});
-    });
-    document.getElementById('mediaNext')?.addEventListener('click', () => {
-      mediaGallery?.scrollBy({left: mediaGallery.clientWidth * .78, behavior:'smooth'});
-    });
-
   </script>
-</body>
-</html>
+
+</body></html>

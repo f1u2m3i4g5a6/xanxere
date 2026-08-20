@@ -1,29 +1,38 @@
 {
   "reciclagem": [
-    { "label": "2026", "value": null }
+    { "label": "2024", "value": 18.4 },
+    { "label": "2025", "value": 22.7 },
+    { "label": "2026", "value": 28.3 }
   ],
   "residuos": [
-    { "label": "Residencial (m³/ano)", "value": null },
-    { "label": "Industrial (m³/ano)", "value": null }
+    { "label": "Residencial (m³/ano)", "value": 125000 },
+    { "label": "Industrial (m³/ano)", "value": 48000 }
   ],
   "poluicoes": [
-    { "label": "Jan", "value": null },
-    { "label": "Fev", "value": null },
-    { "label": "Mar", "value": null }
+    { "label": "Jan", "value": 32 },
+    { "label": "Fev", "value": 28 },
+    { "label": "Mar", "value": 35 },
+    { "label": "Abr", "value": 30 },
+    { "label": "Mai", "value": 27 },
+    { "label": "Jun", "value": 25 }
   ],
   "noticias": [
     {
       "title": "Programa de Desenvolvimento Sustentável — Relatório 2026",
       "summary": "Resumo e links para atas de audiência pública.",
-      "thumbUrl": "",
-      "url": ""
+      "thumbUrl": "noticia.png",
+      "url": "relatorio-2026.pdf"
     }
   ],
   "videos": [
     {
       "title": "Projeto Reflorestamento - Xanxerê",
-      "embedUrl": "https://www.youtube.com/embed/SEU_VIDEO_ID",
-      "thumbUrl": ""
+      "videoUrl": "reflorestamento.mp4",
+      "thumbUrl": "reflorestamento.png"
     }
+  ],
+  "images": [
+    { "title": "Praça Central", "url": "praca-central.jpg", "thumbUrl": "praca-central-thumb.jpg" },
+    { "title": "Campanha de Coleta", "url": "coleta.jpg", "thumbUrl": "coleta-thumb.jpg" }
   ]
 }
