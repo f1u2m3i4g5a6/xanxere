@@ -1,480 +1,319 @@
-<html lang="pt-BR"><head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Xanxerê Sustentável — Informativo &amp; Galeria</title>
-  <meta name="description" content="Portal informativo sobre reciclagem, gestão de resíduos, reflorestamento e iniciativas em Xanxerê. Galeria de imagens e chat comunitário.">
-  <link rel="icon" type="image/png" href="xanxere.png">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg-1:#07140e; --bg-2:#0b2116; --text:#f3faf5; --muted:#a7b9ae;
-      --accent:#69e28b; --line:rgba(255,255,255,.10);
-      --max-width:1180px; --card-radius:16px; --shadow-lg:0 20px 50px rgba(0,0,0,.42);
-      --focus:0 0 0 4px rgba(105,226,139,.12);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:var(--text);
-      background:
-        radial-gradient(circle at 10% 5%,rgba(105,226,139,.14),transparent 26rem),
-        radial-gradient(circle at 90% 15%,rgba(66,185,238,.09),transparent 28rem),
-        linear-gradient(180deg,var(--bg-1),var(--bg-2) 65%,#06110c);
-      -webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:48px;
-    }
-
-    header{
-      position:sticky;top:12px;margin:12px auto;max-width:calc(var(--max-width)+36px);
-      background:linear-gradient(90deg, rgba(8,25,17,.88), rgba(5,18,12,.86));
-      padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.04);box-shadow:var(--shadow-lg);
-      display:flex;gap:16px;align-items:center;z-index:1200;margin-left:12px;margin-right:12px;
-    }
-    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
-    .brand .logo{width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-weight:800}
-    nav{margin-left:auto;display:flex;gap:8px;align-items:center}
-    nav a{color:#eaf7ed;text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
-    nav a:hover, nav a:focus{background:rgba(255,255,255,.04);outline:none;box-shadow:var(--focus)}
-
-    main{max-width:var(--max-width);margin:28px auto;padding:20px;display:grid;gap:20px}
-
-    .card{
-      background:linear-gradient(145deg,rgba(21,44,31,.9),rgba(10,27,18,.88));
-      border-radius:var(--card-radius);padding:18px;border:1px solid rgba(255,255,255,.04);
-      box-shadow:0 10px 30px rgba(0,0,0,.36);backdrop-filter:blur(8px)
-    }
-
-    .hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:28px;border-radius:18px;overflow:hidden}
-    .kicker{display:inline-flex;gap:10px;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(105,226,139,.06);color:#cdefd3;font-weight:800;font-size:12px}
-    h1{margin:12px 0 12px;font-size:clamp(28px,4.6vw,48px);line-height:1}
-    p.lead{margin:0;color:var(--muted);font-size:15px;max-width:66ch}
-
-    .two-col{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
-    .two-equal{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-    .chart-wrap{position:relative;min-height:260px;border-radius:12px;overflow:hidden;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.03)}
-    .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-    .note{background:rgba(10,27,18,.86);border:1px solid var(--line);padding:13px 17px;border-radius:14px;color:var(--muted);text-align:center}
-
-    /* Gallery */
-    .gallery{display:flex;flex-direction:column;gap:12px}
-    .viewport{position:relative;overflow:hidden;border-radius:12px;min-height:280px;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));border:1px solid rgba(255,255,255,.03)}
-    .slides{display:flex;transition:transform 420ms cubic-bezier(.2,.9,.35,1);will-change:transform}
-    .slide{min-width:100%;display:grid;place-items:center;padding:22px}
-    .slide img{max-width:100%;max-height:600px;object-fit:contain;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
-    .thumbs{display:flex;gap:10px;overflow:auto;padding-bottom:6px}
-    .thumb{min-width:96px;height:96px;border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:transform .18s,border-color .18s}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .thumb.active{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
-
-    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);color:#fff;border:none;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;cursor:pointer}
-    .carousel-btn.prev{left:12px}.carousel-btn.next{right:12px}
-    .carousel-btn:focus{box-shadow:var(--focus);outline:none}
-
-    .media-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
-    .media-item{min-width:min(78%,420px);border-radius:12px;overflow:hidden;flex:0 0 auto;scroll-snap-align:start;position:relative;background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.18));border:1px solid rgba(255,255,255,.03)}
-    .media-item img{width:100%;height:100%;object-fit:cover;display:block}
-
-    /* Chat */
-    .chat{display:flex;flex-direction:column;gap:10px}
-    #chatBox{height:300px;overflow:auto;padding:12px;border-radius:12px;background:rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.03)}
-    .chat-msg{padding:10px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.02);margin-bottom:8px}
-    .chat-controls{display:flex;gap:8px;align-items:center;margin-top:6px}
-
-    input[type=text]{padding:10px;border-radius:10px;border:1px solid var(--line);background:rgba(0,0,0,.12);color:var(--text)}
-    input[type=text]:focus{outline:none;box-shadow:var(--focus);border-color:rgba(105,226,139,.65)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:800;color:#062010;background:linear-gradient(135deg,var(--accent),#39b86a);box-shadow:0 8px 20px rgba(50,180,95,.15)}
-
-    footer{max-width:var(--max-width);margin:20px auto;padding:12px}
-    .footer-card{border-radius:12px;padding:18px;text-align:center;background:linear-gradient(145deg,rgba(105,226,139,.07),rgba(255,255,255,.025));border:1px solid var(--line)}
-
-    @media(max-width:980px){.two-col{grid-template-columns:1fr}.hero-left{max-width:100%}nav{display:none}}
-    @media(max-width:620px){.thumb{min-width:72px;height:72px}.media-item{min-width:86%}}
-    /* Modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);z-index:1500;padding:20px}
-    .modal.open{display:flex}
-    .modal .box{width:min(1100px,96%);max-height:90vh;background:#000;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-    .modal video,.modal img{width:100%;height:100%;display:block;object-fit:contain}
-    .modal .close{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.06);border:none;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer}
-  </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" async=""></script></head>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Xanxerê em Ação — Comunidade</title>
+  <meta name="description" content="Plataforma comunitária para denúncias, notícias, empresas e doações — Xanxerê" />
+  <link rel="icon" href="xanxere.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-  <header role="banner" aria-label="Cabeçalho">
-    <div class="brand"><div class="logo" aria-hidden="true">XS</div>Xanxerê Sustentável</div>
-    <nav role="navigation" aria-label="Menu principal">
-      <a href="#acoes">Ações</a>
-      <a href="#indicadores">Indicadores</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#media">Mídia</a>
-    </nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="brand" id="home-btn" aria-label="Ir para Home">
+        <img src="xanxere.png" alt="Brasão de Xanxerê" class="brand-img" loading="lazy">
+        <div class="brand-text">
+          <strong>Xanxerê</strong>
+          <span>em Ação</span>
+        </div>
+      </button>
+
+      <div class="search-wrap" role="search">
+        <input id="search-global" type="search" placeholder="Buscar ocorrências, notícias ou empresas..." aria-label="Pesquisar">
+        <button id="theme-toggle" class="icon-btn" title="Alternar tema" aria-pressed="false"><i class="fas fa-moon"></i></button>
+        <button id="menu-toggle" class="icon-btn mobile-only" aria-expanded="false" aria-label="Abrir menu"><i class="fas fa-bars"></i></button>
+      </div>
+
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <button data-target="home" class="nav-link"><i class="fas fa-home"></i> Home</button>
+        <button data-target="feed" class="nav-link"><i class="fas fa-newspaper"></i> Ocorrências</button>
+        <button data-target="jornal" class="nav-link"><i class="fas fa-book-open"></i> Notícias</button>
+        <button data-target="chat" class="nav-link"><i class="fas fa-comments"></i> Chat</button>
+        <button data-target="empresas" class="nav-link"><i class="fas fa-handshake"></i> Empresas</button>
+        <button data-target="doacoes" class="nav-link"><i class="fas fa-heart"></i> Doações</button>
+        <button id="admin-open" class="icon-btn" title="Painel Admin"><i class="fas fa-user-shield"></i></button>
+      </nav>
+    </div>
   </header>
 
-  <main role="main">
-    <section class="card hero" aria-labelledby="hero-title">
-      <div class="hero-left">
-        <div class="kicker">Projeto local</div>
-        <h1 id="hero-title">Preservar o meio ambiente é uma escolha.</h1>
-        <p class="lead muted">E essa escolha começa com cada um de nós. Um espaço para ações, indicadores e uma galeria visual que você alimenta manualmente.</p>
-        <div style="margin-top:14px"><a class="btn" href="#acoes">Explorar Ações</a> <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,.04);color:#eaf7ed;margin-left:8px" href="#media">Ver Galeria</a></div>
-      </div>
-      <div aria-hidden="true" style="width:320px;display:flex;flex-direction:column;gap:12px;align-items:flex-end">
-        <div style="background:linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.03);width:100%;text-align:right">
-          <div style="font-weight:800;font-size:18px">Xanxerê • 2026</div>
-          <div class="muted" style="font-size:12px">Dados informativos e galeria manual</div>
-        </div>
-        <div style="width:100%;height:100px;border-radius:12px;background:linear-gradient(135deg,rgba(105,226,139,.06),rgba(66,185,238,.04));border:1px solid rgba(255,255,255,.02)"></div>
-      </div>
-    </section>
-
-    <section id="acoes" class="card" aria-labelledby="acoes-title">
-      <h2 id="acoes-title">Reciclagem &amp; Gestão de Resíduos</h2>
-      <p class="muted">Dicas práticas e indicadores — adicione valores no arquivo <strong>dataxanxere-2026.json</strong>.</p>
-      <div class="two-col" style="margin-top:12px">
-        <div class="chart-wrap">
-          <h3 style="margin:14px 18px 6px">Reciclagem — indicadores</h3>
-          <canvas id="chartReciclagem" style="width:100%;height:220px" aria-label="Gráfico de reciclagem"></canvas>
-          <div id="ovReciclagem" class="overlay"><div class="note">Aguardando dados — preencha dataxanxere-2026.json (chave: reciclagem)</div></div>
-        </div>
-        <aside class="card">
-          <strong>Como participar</strong>
-          <p class="muted">Separe resíduos, use pontos de coleta e participe das campanhas locais.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section id="indicadores" class="card">
-      <h2>Indicadores</h2>
-      <p class="muted">Coleta de lixo e índices de poluição (carregados localmente).</p>
-      <div class="two-equal" style="margin-top:12px">
-        <div class="chart-wrap">
-          <h3 style="margin:14px 18px 6px">Coleta de Lixo</h3>
-          <canvas id="chartLixo" style="width:100%;height:220px" aria-label="Gráfico de coleta de lixo"></canvas>
-          <div id="ovLixo" class="overlay"><div class="note">Aguardando dados</div></div>
-        </div>
-        <div class="chart-wrap">
-          <h3 style="margin:14px 18px 6px">Poluições</h3>
-          <canvas id="chartPoluicoes" style="width:100%;height:220px" aria-label="Gráfico de poluições"></canvas>
-          <div id="ovPoluicoes" class="overlay"><div class="note">Aguardando dados</div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="galeria" class="card" aria-labelledby="galeria-title">
-      <h2 id="galeria-title">Galeria de Imagens &amp; Vídeos</h2>
-      <p class="muted">Adicione suas imagens em <code>images</code> ou vídeos em <code>videos</code> no JSON. Os arquivos (por exemplo <code>ifa.mp4</code>) devem ficar disponíveis no mesmo diretório ou em URLs públicas.</p>
-
-      <div class="gallery" style="margin-top:12px">
-        <div class="viewport" aria-live="polite">
-          <button class="carousel-btn prev" aria-label="Anterior">‹</button>
-          <div class="slides" id="slides" role="list"></div>
-          <button class="carousel-btn next" aria-label="Próximo">›</button>
-        </div>
-        <div class="thumbs" id="thumbs" role="listbox" aria-label="Miniaturas"></div>
-      </div>
-    </section>
-
-    <section id="media" class="card">
-      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start">
-        <div>
-          <h3>Imagens e Vídeos (manuais)</h3>
-          <p class="muted">Os itens abaixo são carregados do JSON local; clique para abrir ou reproduzir.</p>
-          <div id="videoGallery" class="media-grid" style="margin-top:12px"></div>
-        </div>
-
-        <aside>
-          <h3>Chat Comunitário</h3>
-          <div class="chat card" role="region" aria-label="Chat">
-            <div id="chatBox" aria-live="polite"></div>
-            <div class="chat-controls">
-              <input id="displayName" type="text" placeholder="Seu nome (opcional)" aria-label="Seu nome">
-              <input id="messageInput" type="text" placeholder="Mensagem pública" aria-label="Mensagem">
-              <button id="sendBtn" class="btn" aria-label="Enviar">Enviar</button>
-            </div>
-            <div class="muted" style="margin-top:8px">Autenticação anônima usada para envio — habilite no Firebase Console.</div>
+  <main class="container main" id="main">
+    <!-- HOME -->
+    <section id="home" class="page active">
+      <section class="hero">
+        <div class="hero-left">
+          <span class="badge">Bem-vindo a Xanxerê</span>
+          <h1>Transformando nossa cidade <span class="accent">Juntos</span></h1>
+          <p>Registre problemas, leia notícias locais, conheça empresas que ajudam e encontre pontos de doação.</p>
+          <div class="hero-actions">
+            <button class="btn primary" id="open-oco">Registrar Ocorrência</button>
+            <button class="btn outline" data-target="feed">Ver Ocorrências</button>
           </div>
-        </aside>
+        </div>
+        <div class="hero-right">
+          <div class="stats" aria-hidden="false">
+            <div class="stat">
+              <div class="value" id="stat-ocorrencias">0</div>
+              <div class="label">Ocorrências</div>
+            </div>
+            <div class="stat">
+              <div class="value" id="stat-noticias">0</div>
+              <div class="label">Notícias</div>
+            </div>
+            <div class="stat">
+              <div class="value" id="stat-empresas">0</div>
+              <div class="label">Empresas</div>
+            </div>
+            <div class="stat">
+              <div class="value" id="stat-usuarios">0</div>
+              <div class="label">Membros</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured">
+        <h2>Em destaque</h2>
+        <div class="featured-grid">
+          <div class="card" aria-labelledby="foco-oco">
+            <h3 id="foco-oco">Ocorrências</h3>
+            <div id="featured-ocorrencias" class="list-empty">Nenhuma ocorrência</div>
+            <a class="link" data-target="feed">Ver tudo →</a>
+          </div>
+          <div class="card" aria-labelledby="foco-not">
+            <h3 id="foco-not">Notícias</h3>
+            <div id="featured-noticias" class="list-empty">Nenhuma notícia</div>
+            <a class="link" data-target="jornal">Ver tudo →</a>
+          </div>
+          <div class="card" aria-labelledby="foco-emp">
+            <h3 id="foco-emp">Empresas</h3>
+            <div id="featured-empresas" class="list-empty">Nenhuma empresa</div>
+            <a class="link" data-target="empresas">Ver tudo →</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- FEED -->
+    <section id="feed" class="page">
+      <header class="page-header">
+        <h2>Feed de Ocorrências</h2>
+        <div class="filters">
+          <select id="filter-categoria"><option value="">Todas categorias</option><option value="buraco">Buraco</option><option value="iluminacao">Iluminação</option><option value="arvore">Árvore</option><option value="esgoto">Esgoto</option><option value="agua">Falta de água</option><option value="lixo">Lixo</option></select>
+          <select id="filter-bairro"><option value="">Todos bairros</option></select>
+          <select id="filter-status"><option value="">Todos status</option><option value="novo">Novo</option><option value="em-andamento">Em andamento</option><option value="resolvido">Resolvido</option></select>
+          <button class="btn" id="clear-filters">Limpar</button>
+        </div>
+      </header>
+      <div id="feed-list" class="cards-grid empty-state">Nenhuma ocorrência</div>
+    </section>
+
+    <!-- JORNAL -->
+    <section id="jornal" class="page">
+      <header class="page-header"><h2>Jornal</h2></header>
+      <div id="noticias-list" class="cards-grid empty-state">Nenhuma notícia</div>
+    </section>
+
+    <!-- CHAT -->
+    <section id="chat" class="page">
+      <header class="page-header"><h2>Chat Comunitário</h2></header>
+      <div class="chat-panel">
+        <div id="chat-messages" class="chat-messages empty-state">Sem mensagens</div>
+        <form id="chat-form" class="chat-form" aria-label="Enviar mensagem">
+          <input id="chat-input" type="text" maxlength="500" placeholder="Digite uma mensagem..." required>
+          <button class="btn primary" type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
       </div>
+    </section>
+
+    <!-- EMPRESAS -->
+    <section id="empresas" class="page">
+      <header class="page-header"><h2>Empresas Solidárias</h2></header>
+      <div class="controls">
+        <input id="filter-empresas-nome" placeholder="Buscar empresa..." />
+      </div>
+      <div id="empresas-list" class="cards-grid empty-state">Nenhuma empresa</div>
+    </section>
+
+    <!-- DOACOES -->
+    <section id="doacoes" class="page">
+      <header class="page-header"><h2>Pontos de Doação</h2></header>
+      <div class="controls">
+        <input id="filter-doacoes-nome" placeholder="Buscar ponto..." />
+        <select id="filter-tipo-doacao"><option value="">Todos</option><option value="alimentos">Alimentos</option><option value="roupas">Roupas</option><option value="higiene">Higiene</option><option value="livros">Livros</option></select>
+      </div>
+      <div id="doacoes-list" class="cards-grid empty-state">Nenhum ponto</div>
     </section>
   </main>
 
-  <footer>
-    <div class="card footer-card" style="max-width:var(--max-width);margin:12px auto">
-      <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
-        <div style="font-weight:800;font-size:16px">Xanxerê Sustentável</div>
-        <div class="muted" style="font-size:13px">Educação • Sustentabilidade • Comunidade</div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Modal for images/videos -->
-  <div id="mediaModal" class="modal" role="dialog" aria-hidden="true" aria-label="Visualizador de mídia">
-    <button class="close" id="modalClose" aria-label="Fechar">✕</button>
-    <div class="box" role="document">
-      <video id="mediaPlayer" controls="" playsinline="" style="display:none;background:#000"></video>
-      <img id="mediaImage" alt="" style="display:none">
+  <!-- MODALS -->
+  <div id="ocorrencia-modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="oco-title">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="oco-title">Registrar Ocorrência</h3>
+      <form id="form-ocorrencia">
+        <label>Categoría
+          <select id="oco-categoria" required>
+            <option value="">Selecione</option>
+            <option value="buraco">Buraco</option>
+            <option value="iluminacao">Iluminação</option>
+            <option value="arvore">Árvore</option>
+            <option value="esgoto">Esgoto</option>
+            <option value="agua">Falta de água</option>
+            <option value="lixo">Lixo</option>
+            <option value="outro">Outro</option>
+          </select>
+        </label>
+        <div class="grid-2">
+          <label>Bairro<input id="oco-bairro" required></label>
+          <label>Rua<input id="oco-rua" required></label>
+        </div>
+        <label>Descrição<textarea id="oco-descricao" rows="5" required></textarea></label>
+        <label>Foto (opcional)<input id="oco-foto" type="file" accept="image/*"></label>
+        <div id="oco-preview" class="image-preview" aria-hidden="true"></div>
+        <label class="row"><input id="oco-anonimo" type="checkbox"> Publicar anonimamente</label>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Publicar</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- Chart.js UMD CDN com fallback local -->
-  <script>
-    (function loadChart(){
-      const cdn = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
-      const local = './vendor/chart.umd.min.js';
-      function append(src){ return new Promise((res,re)=>{ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=res; s.onerror=re; document.head.appendChild(s); }); }
-      append(cdn).catch(()=>append(local).catch(()=>console.warn('Chart.js não carregou.')));
-    })();
-  </script>
+  <!-- EDIT MODALS (admin) -->
+  <div id="edit-ocorrencia-modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="edit-oco-title">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="edit-oco-title">Editar Ocorrência</h3>
+      <form id="form-edit-ocorrencia">
+        <!-- fields filled dynamically -->
+        <input type="hidden" id="edit-oco-id">
+        <label>Categoria<select id="edit-oco-categoria"></select></label>
+        <div class="grid-2">
+          <label>Bairro<input id="edit-oco-bairro"></label>
+          <label>Rua<input id="edit-oco-rua"></label>
+        </div>
+        <label>Descrição<textarea id="edit-oco-descricao" rows="5"></textarea></label>
+        <label>Imagem<input id="edit-oco-foto" type="file" accept="image/*"></label>
+        <div id="edit-oco-preview" class="image-preview" aria-hidden="true"></div>
+        <label>Status<select id="edit-oco-status"><option value="novo">Novo</option><option value="em-andamento">Em andamento</option><option value="resolvido">Resolvido</option></select></label>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  <script type="module">
-    import firebaseApp from './firebase-app.js';
-    firebaseApp.initFirebase(undefined, { enableAnalytics:false, signInAnon:false });
+  <div id="noticia-modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="not-title">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="not-title">Nova Notícia</h3>
+      <form id="form-noticia">
+        <label>Título<input id="not-titulo" required></label>
+        <label>Subtítulo<input id="not-subtitulo"></label>
+        <label>Categoria<select id="not-categoria"><option value="geral">Geral</option><option value="politica">Política</option><option value="economia">Economia</option></select></label>
+        <label>Conteúdo<textarea id="not-conteudo" rows="6" required></textarea></label>
+        <label>Imagem de capa<input id="not-capa" type="file" accept="image/*"></label>
+        <div id="not-capa-preview" class="image-preview" aria-hidden="true"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancelar</button>
+          <button class="btn primary" type="submit">Publicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    // ---------------- media loading + "ifa.mp4" integration ----------------
-    async function loadMediaData(){
-      try {
-        const r = await fetch('./dataxanxere-2026.json', { cache: 'no-store' });
-        if (!r.ok) return {};
-        return await r.json();
-      } catch(e) { console.warn('JSON local não encontrado', e); return {}; }
-    }
+  <!-- EDIT noticia, empresa, doacao modals (similar structure) -->
+  <div id="edit-noticia-modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="edit-not-title">
+      <button class="modal-close" data-close>&times;</button>
+      <h3 id="edit-not-title">Editar Notícia</h3>
+      <form id="form-edit-noticia">
+        <input type="hidden" id="edit-not-id">
+        <label>Título<input id="edit-not-titulo"></label>
+        <label>Subtítulo<input id="edit-not-subtitulo"></label>
+        <label>Categoria<select id="edit-not-categoria"><option value="geral">Geral</option><option value="politica">Política</option><option value="economia">Economia</option></select></label>
+        <label>Conteúdo<textarea id="edit-not-conteudo" rows="6"></textarea></label>
+        <label>Imagem de capa<input id="edit-not-capa" type="file" accept="image/*"></label>
+        <div id="edit-not-capa-preview" class="image-preview" aria-hidden="true"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancelar</button>
+          <button class="btn primary" type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    (async function initMedia(){
-      const data = await loadMediaData();
+  <!-- ADMIN LOGIN -->
+  <div id="admin-login-modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close>&times;</button>
+      <h3>Login Administrador</h3>
+      <form id="form-admin-login">
+        <label>Senha<input id="admin-password" type="password" required></label>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancelar</button>
+          <button class="btn primary" type="submit">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-      // Normalize arrays
-      const images = Array.isArray(data.images) ? data.images.map(i => (typeof i === 'string' ? { url:i } : i)) : (Array.isArray(data.imagens) ? data.imagens.map(i => (typeof i==='string'?{url:i}:i)) : []);
-      const videos = Array.isArray(data.videos) ? data.videos.map(v => (v.videoUrl || v.embedUrl || v.url ? { ...(v), url: v.videoUrl || v.embedUrl || v.url } : v)) : [];
+  <!-- ADMIN PANEL (hidden until login) -->
+  <aside id="admin-panel" class="admin-panel" aria-hidden="true">
+    <div class="admin-inner">
+      <header class="admin-header">
+        <h3>Painel Admin</h3>
+        <button id="admin-logout" class="btn">Sair</button>
+      </header>
+      <nav class="admin-nav">
+        <button class="admin-tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="admin-tab-btn" data-tab="ocorrencias">Ocorrências</button>
+        <button class="admin-tab-btn" data-tab="noticias">Notícias</button>
+        <button class="admin-tab-btn" data-tab="empresas">Empresas</button>
+        <button class="admin-tab-btn" data-tab="doacoes">Doações</button>
+        <button class="admin-tab-btn" data-tab="chat">Chat</button>
+      </nav>
+      <main class="admin-main">
+        <section id="admin-dashboard" class="admin-view active">
+          <h4>Estatísticas</h4>
+          <div class="admin-stats">
+            <div><strong id="admin-oco-total">0</strong><span>Ocorrências</span></div>
+            <div><strong id="admin-oco-resolvidas">0</strong><span>Resolvidas</span></div>
+            <div><strong id="admin-oco-pendentes">0</strong><span>Pendentes</span></div>
+            <div><strong id="admin-users-total">0</strong><span>Usuários</span></div>
+          </div>
+        </section>
+        <section id="admin-ocorrencias" class="admin-view">
+          <div id="admin-oco-list" class="admin-list">Nenhuma ocorrência</div>
+        </section>
+        <section id="admin-noticias" class="admin-view">
+          <div id="admin-noticias-list" class="admin-list">Nenhuma notícia</div>
+        </section>
+        <section id="admin-empresas" class="admin-view">
+          <div id="admin-empresas-list" class="admin-list">Nenhuma empresa</div>
+        </section>
+        <section id="admin-doacoes" class="admin-view">
+          <div id="admin-doacoes-list" class="admin-list">Nenhum ponto</div>
+        </section>
+        <section id="admin-chat" class="admin-view">
+          <div id="admin-chat-list" class="admin-list">Nenhuma mensagem</div>
+        </section>
+      </main>
+    </div>
+  </aside>
 
-      // Force-add IFA video (explicit request) if not already present
-      const ifaUrl = 'ifa.mp4'; // file placed alongside site
-      const ifaPresent = videos.some(v => (v.url || '').includes('ifa.mp4')) || images.some(i => (i.url || '').includes('ifa.mp4'));
-      if (!ifaPresent) {
-        videos.unshift({ title: 'IFA — Vídeo Institucional', url: ifaUrl, thumbUrl: 'ifa.png', type: 'video' });
-      }
+  <div id="toast" class="toast" aria-live="polite" hidden></div>
 
-      // Build combined media list (videos first then images)
-      const mediaItems = [
-        ...videos.map(v => ({ ...v, type: 'video' })),
-        ...images.map(i => ({ ...i, type: 'image' }))
-      ];
+  <!-- Firebase compat (easier for quick integration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
-      buildGallery(mediaItems);
-      buildMediaGrid(mediaItems);
-    })();
-
-    // Build gallery slides & thumbs
-    function buildGallery(items){
-      const slides = document.getElementById('slides');
-      const thumbs = document.getElementById('thumbs');
-      slides.innerHTML = ''; thumbs.innerHTML = '';
-      const total = items.length || 1;
-
-      items.forEach((it, i) => {
-        const slide = document.createElement('div'); slide.className = 'slide';
-        if (it.type === 'image' && it.url) {
-          const img = document.createElement('img'); img.src = it.url; img.alt = it.title || `Imagem ${i+1}`; img.loading = 'lazy';
-          slide.appendChild(img);
-        } else if (it.type === 'video' && it.url) {
-          const poster = it.thumbUrl || it.poster || '';
-          const img = document.createElement('img'); img.src = poster || ''; img.alt = it.title || `Vídeo ${i+1}`; img.loading = 'lazy';
-          // If no poster, show a subtle gradient
-          if (!poster) img.style.background = 'linear-gradient(135deg,#153c27,#102b3a)';
-          slide.appendChild(img);
-        } else {
-          const ph = document.createElement('div'); ph.className = 'note'; ph.textContent = 'Nenhuma mídia encontrada.';
-          slide.appendChild(ph);
-        }
-        slides.appendChild(slide);
-
-        const thumb = document.createElement('button'); thumb.className = 'thumb'; thumb.type = 'button'; thumb.setAttribute('aria-label', it.title || `Item ${i+1}`);
-        const thumbImg = document.createElement('img'); thumbImg.src = it.thumbUrl || it.url || ''; thumbImg.alt = it.title || '';
-        thumb.appendChild(thumbImg);
-        thumb.addEventListener('click', () => goTo(i));
-        thumbs.appendChild(thumb);
-      });
-
-      // Carousel controls and logic
-      let idx = 0;
-      function update(){
-        slides.style.transform = `translateX(${-idx * 100}%)`;
-        Array.from(thumbs.children).forEach((c, i) => c.classList.toggle('active', i === idx));
-      }
-      function prev(){ idx = (idx - 1 + total) % total; update(); }
-      function next(){ idx = (idx + 1) % total; update(); }
-      function goTo(i){ idx = i % total; update(); }
-
-      document.querySelectorAll('.carousel-btn.prev').forEach(b => b.addEventListener('click', prev));
-      document.querySelectorAll('.carousel-btn.next').forEach(b => b.addEventListener('click', next));
-      document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') prev(); else if (e.key === 'ArrowRight') next(); });
-
-      // autoplay with pause on hover
-      let timer = setInterval(next, 4500);
-      const viewport = document.querySelector('.viewport');
-      viewport?.addEventListener('mouseenter', () => clearInterval(timer));
-      viewport?.addEventListener('mouseleave', () => timer = setInterval(next, 4500));
-
-      update();
-    }
-
-    // Build horizontal media grid (click opens modal for video/image)
-    function buildMediaGrid(items){
-      const grid = document.getElementById('videoGallery');
-      grid.innerHTML = '';
-
-      items.forEach((it, i) => {
-        const item = document.createElement('div'); item.className = 'media-item'; item.tabIndex = 0;
-        if (it.type === 'image' && it.url) {
-          const img = document.createElement('img'); img.src = it.url; img.alt = it.title || `Imagem ${i+1}`; item.appendChild(img);
-        } else if (it.type === 'video' && it.url) {
-          const poster = it.thumbUrl || it.poster || '';
-          const img = document.createElement('img'); img.src = poster || ''; img.alt = it.title || `Vídeo ${i+1}`; img.style.objectFit = 'cover';
-          if (!poster) img.style.background = 'linear-gradient(135deg,#153c27,#102b3a)';
-          item.appendChild(img);
-          const badge = document.createElement('div'); badge.style.position='absolute'; badge.style.left='12px'; badge.style.bottom='12px'; badge.style.padding='8px 10px'; badge.style.borderRadius='10px'; badge.style.background='rgba(0,0,0,.5)'; badge.style.fontWeight='800'; badge.innerText = '▶ Vídeo'; item.appendChild(badge);
-        } else {
-          const note = document.createElement('div'); note.className='note'; note.textContent = 'Nenhuma mídia definida.'; item.appendChild(note);
-        }
-
-        // click handler: if video plays modal, if image opens modal enlarged
-        item.addEventListener('click', () => openMedia(it));
-        item.addEventListener('keydown', e => { if (e.key === 'Enter') openMedia(it); });
-        grid.appendChild(item);
-      });
-    }
-
-    // Modal open for media (video or image)
-    const modal = document.getElementById('mediaModal');
-    const player = document.getElementById('mediaPlayer');
-    const imgView = document.getElementById('mediaImage');
-    const modalClose = document.getElementById('modalClose');
-
-    function openMedia(it){
-      if (!it || (!it.url)) return;
-      const url = it.url;
-      if (url.endsWith('.mp4') || url.includes('.mp4')) {
-        imgView.style.display = 'none';
-        player.style.display = 'block';
-        player.src = url;
-        player.currentTime = 0;
-        player.play().catch(()=>{});
-      } else {
-        player.pause(); player.style.display = 'none'; player.src = '';
-        imgView.style.display = 'block';
-        imgView.src = url;
-        imgView.alt = it.title || '';
-      }
-      modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
-    }
-
-    function closeModal(){
-      modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
-      try{ player.pause(); player.src = ''; }catch(e){}
-      imgView.src = '';
-    }
-
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-    // ---------------- Charts (local JSON only) ----------------
-    async function populateCharts(){
-      let data = {};
-      try { const r = await fetch('./dataxanxere-2026.json', { cache: 'no-store' }); if (r.ok) data = await r.json(); } catch(e){ console.warn('JSON local não encontrado', e); }
-
-      const ensureChart = (id, type, labels, dataset, options = {}) => {
-        const el = document.getElementById(id); if (!el || !window.Chart) return;
-        try { new Chart(el.getContext('2d'), { type, data: { labels, datasets: [dataset] }, options: Object.assign({ responsive:true, maintainAspectRatio:false }, options) }); } catch(err) { console.warn('Erro Chart', err); }
-      };
-
-      if (Array.isArray(data.reciclagem) && data.reciclagem.length) {
-        document.getElementById('ovReciclagem').style.display = 'none';
-        ensureChart('chartReciclagem', 'bar', data.reciclagem.map(d => d.label), { label:'Taxa de Reciclagem (%)', data: data.reciclagem.map(d => d.value), backgroundColor:'#69e28b' });
-      }
-      const residuos = data.residuos || data.lixo || [];
-      if (Array.isArray(residuos) && residuos.length) {
-        document.getElementById('ovLixo').style.display = 'none';
-        ensureChart('chartLixo', 'doughnut', residuos.map(d => d.label), { data: residuos.map(d => d.value), backgroundColor:['#70bf7a','#f6d365','#6b4f3a'] });
-      }
-      if (Array.isArray(data.poluicoes) && data.poluicoes.length) {
-        document.getElementById('ovPoluicoes').style.display = 'none';
-        ensureChart('chartPoluicoes', 'line', data.poluicoes.map(d => d.label), { label:'Índice de Poluição', data: data.poluicoes.map(d => d.value), borderColor:'#d9534f', backgroundColor:'rgba(217,83,79,0.08)' });
-      }
-
-      const newsList = document.getElementById('newsList');
-      if (newsList && Array.isArray(data.noticias) && data.noticias.length) {
-        data.noticias.forEach(n => {
-          const art = document.createElement('article'); art.className = 'card'; art.style.marginBottom = '10px';
-          art.innerHTML = `<strong>${n.title || ''}</strong><p class="muted">${n.summary || ''}</p>`;
-          newsList.appendChild(art);
-        });
-      } else if (newsList) {
-        newsList.innerHTML = '<div class="muted">Nenhuma notícia disponível.</div>';
-      }
-    }
-
-    (function waitForChart() {
-      let tries = 20, i = 0;
-      const t = setInterval(() => {
-        if (window.Chart || ++i > tries) { clearInterval(t); populateCharts().catch(()=>{}); }
-      }, 200);
-    })();
-
-    // ---------------- Chat (Firebase only) ----------------
-    (async function initChat(){
-      const chatBox = document.getElementById('chatBox');
-      const sendBtn = document.getElementById('sendBtn');
-      const msgInput = document.getElementById('messageInput');
-      const nameInput = document.getElementById('displayName');
-
-      async function ensureAuth(){
-        try { await firebaseApp.signInAnonymouslyIfNeeded(); return true; }
-        catch(e) { console.warn('Auth anon falhou', e); return false; }
-      }
-
-      function renderMessages(msgs){
-        chatBox.innerHTML = '';
-        msgs.forEach(m => {
-          const el = document.createElement('div'); el.className = 'chat-msg';
-          const header = document.createElement('div'); header.style.fontWeight='700'; header.textContent = m.author || 'Visitante';
-          const text = document.createElement('div'); text.textContent = m.text || '';
-          const time = document.createElement('div'); time.style.fontSize='12px'; time.style.color='var(--muted)';
-          const d = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate() : (m.createdAt ? new Date(m.createdAt.seconds*1000) : null);
-          time.textContent = d ? d.toLocaleString() : '';
-          el.appendChild(header); el.appendChild(text); el.appendChild(time);
-          chatBox.appendChild(el);
-        });
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-
-      const authOk = await ensureAuth();
-      if (authOk) {
-        firebaseApp.listenChat({ municipio:'xanxere', onUpdate: renderMessages, limitSize: 300 });
-      } else {
-        chatBox.innerHTML = '<div class="muted">Chat indisponível: habilite Autenticação Anônima no Firebase Console.</div>';
-      }
-
-      const KEY='chat_rate_v1', MAX=5, WINDOW=60*1000;
-      function canSend(){ try{ const s = JSON.parse(localStorage.getItem(KEY) || '{"t":[]}'); const now = Date.now(); s.t = s.t.filter(x => (now - x) < WINDOW); if (s.t.length >= MAX) return false; s.t.push(now); localStorage.setItem(KEY, JSON.stringify(s)); return true;}catch(e){return true;} }
-      function messageAllowed(text){ if(!text) return false; if(text.length>1000) return false; const block = ['http://','https://','<script','spam','buy now']; const t=text.toLowerCase(); return !block.some(b => t.includes(b)); }
-
-      sendBtn.addEventListener('click', async () => {
-        const text = (msgInput.value || '').trim(); if (!text) return;
-        if (!messageAllowed(text)) return alert('Mensagem bloqueada por política local.');
-        if (!canSend()) return alert('Você enviou muitas mensagens. Aguarde alguns instantes.');
-        sendBtn.disabled = true;
-        const name = (nameInput.value || 'Visitante').trim();
-        try {
-          const ok = await ensureAuth();
-          if(!ok){ alert('Não autenticado. Ative Anonymous Auth no Firebase.'); return; }
-          await firebaseApp.sendChatMessage({ municipio:'xanxere', author: name, text });
-          msgInput.value = '';
-        } catch(e) { console.error(e); alert('Erro ao enviar mensagem'); }
-        finally { sendBtn.disabled = false; }
-      });
-      msgInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendBtn.click(); } });
-    })();
-
-  </script>
-
-</body></html>
+  <script src="script.js" defer></script>
+</body>
+</html>
