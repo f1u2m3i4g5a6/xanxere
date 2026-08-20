@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Xanxerê Sustentável — Informativo 2026</title>
+  <meta name="description" content="Portal informativo sobre reciclagem, gestão de resíduos, reflorestamento e indicadores ambientais em Xanxerê (SC)." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6fbf7;
+      --card:#ffffff;
+      --accent-1:#2f8f4a; /* verde */
+      --accent-2:#2b7fbf; /* azul */
+      --text:#0f1720;
+      --muted:#6b7780;
+      --radius:14px;
+      --shadow:0 12px 36px rgba(12,18,20,0.06);
+      --max-width:1100px;
+      --transition:240ms cubic-bezier(.22,.9,.35,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; color:var(--text);
+      background:linear-gradient(180deg,var(--bg),#eef7f3 60%);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* Header */
+    header{
+      position:fixed; inset:12px 12px auto 12px; z-index:1000;
+      display:flex; align-items:center; gap:16px; padding:12px 16px;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#fff;
+      border-radius:12px; box-shadow:var(--shadow);
+    }
+    .brand{display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit}
+    .logo{width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav{margin-left:auto; display:flex; gap:10px; align-items:center}
+    nav a{color:#fff; text-decoration:none; padding:8px 10px; border-radius:8px; font-weight:600}
+    nav a:hover{background:rgba(255,255,255,0.08); transform:translateY(-2px); transition:var(--transition)}
+
+    /* Container */
+    main{max-width:var(--max-width); margin:120px auto 80px; padding:0 18px; display:grid; gap:28px}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1fr 340px; gap:18px; padding:22px; border-radius:12px; background:linear-gradient(180deg,rgba(47,143,74,0.05),rgba(43,127,191,0.03)); box-shadow:var(--shadow)}
+    .hero h1{margin:0; font-size:1.45rem}
+    .muted{color:var(--muted); font-size:0.95rem}
+
+    /* Card */
+    .card{background:var(--card); border-radius:12px; padding:14px; box-shadow:0 8px 20px rgba(8,16,20,0.04); transition:transform var(--transition)}
+    .card:hover{transform:translateY(-6px)}
+
+    /* Grids */
+    .grid-2{display:grid; grid-template-columns:1fr 420px; gap:18px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    h2{margin:0 0 8px}
+
+    /* Charts area */
+    .chart-wrap{position:relative; min-height:220px; border-radius:10px; overflow:hidden}
+    .overlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none}
+    .note{background:rgba(255,255,255,0.9); padding:10px 14px; border-radius:10px; color:var(--muted); font-weight:600; text-align:center}
+
+    /* Map embed */
+    .map-embed{width:100%; height:420px; border-radius:12px; overflow:hidden}
+    .map-embed iframe{width:100%; height:100%; border:0; display:block}
+
+    /* News */
+    .news-list{display:flex; flex-direction:column; gap:12px}
+    .news-item{display:flex; gap:12px; align-items:flex-start}
+    .news-thumb{width:140px; height:86px; border-radius:10px; background:#eef; flex:0 0 140px; overflow:hidden; display:flex; align-items:center; justify-content:center; color:var(--muted)}
+
+    /* Video grid & modal */
+    .video-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px}
+    .video-card{position:relative; border-radius:10px; overflow:hidden; background:#000; min-height:140px; display:flex; align-items:center; justify-content:center; cursor:pointer}
+    .video-card img{width:100%; height:100%; object-fit:cover}
+    .video-card .label{position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,0.45); color:#fff; padding:6px 8px; border-radius:8px; font-weight:700}
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.75); z-index:1400}
+    .modal.open{display:flex}
+    .modal .box{width:min(1100px,95%); border-radius:12px; overflow:hidden; background:#000}
+    .modal video{width:100%; height:100%; display:block}
+
+    /* Chat */
+    .chat{display:flex; flex-direction:column; gap:10px}
+    #chatBox{height:320px; overflow:auto; padding:12px; border-radius:10px; background:linear-gradient(180deg,#fbfffb,#f0fff5)}
+    .chat-msg{padding:10px; border-radius:8px; background:#fff; box-shadow:0 6px 18px rgba(8,16,20,0.04)}
+    .chat-controls{display:flex; gap:8px; align-items:center}
+    input[type="text"], textarea{padding:10px; border-radius:8px; border:1px solid #e6eaee; outline:none}
+    input[type="text"]:focus{box-shadow:0 8px 18px rgba(47,143,74,0.07); border-color:var(--accent-1)}
+
+    /* Footer */
+    footer{padding:28px; background:linear-gradient(90deg,#eef7ee,#f0f9ff); border-top:1px solid rgba(0,0,0,0.04)}
+    .footer-grid{display:flex; justify-content:space-between; gap:16px; max-width:var(--max-width); margin:0 auto}
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="#top" aria-label="Xanxerê Sustentável">
+      <div class="logo" aria-hidden="true">XS</div>
+      <div>
+        <div style="font-weight:700">Xanxerê Sustentável</div>
+        <div style="font-size:12px;opacity:.95">Informativo — 2026</div>
+      </div>
+    </a>
+
+    <nav aria-label="Navegação">
+      <a href="#acoes">Cuidar do Ambiente</a>
+      <a href="#reflorestamento">Reflorestamento</a>
+      <a href="#indicadores">Indicadores</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#media">Mídia</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero card" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Preservar o meio ambiente é uma escolha.</h1>
+        <p class="muted">E essa escolha começa com cada um de nós. Informações e ações para reciclagem, gestão de resíduos, reflorestamento e redução de poluições em Xanxerê.</p>
+
+        <div style="margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px">
+          <div class="card"><strong>Reciclagem</strong><p class="muted">Pontos, campanhas e taxas</p></div>
+          <div class="card"><strong>Reflorestamento</strong><p class="muted">Áreas protegidas e projetos</p></div>
+          <div class="card"><strong>Gestão de Resíduos</strong><p class="muted">Coleta e destinação</p></div>
+        </div>
+      </div>
+
+      <aside class="card">
+        <strong>Simples & Informativo</strong>
+        <p class="muted">Este site é público e direto: conteúdo informativo, sem complexidade.</p>
+      </aside>
+    </section>
+
+    <!-- AÇÕES AMBIENTAIS -->
+    <section id="acoes" class="card" aria-labelledby="acoes-title">
+      <h2 id="acoes-title">Reciclagem & Gestão de Resíduos</h2>
+      <p class="muted">Taxas de reciclagem, pontos de coleta e orientações práticas para reduzir resíduos.</p>
+
+      <div style="display:grid; grid-template-columns:1fr 340px; gap:16px; margin-top:12px">
+        <div class="card chart-wrap">
+          <h3 style="margin-bottom:10px">Reciclagem - indicadores</h3>
+          <canvas id="chartReciclagem" aria-label="Gráfico de reciclagem"></canvas>
+          <div id="ovReciclagem" class="overlay"><div class="note">Aguardando dados de reciclagem — insira no JSON ou via Firestore</div></div>
+        </div>
+
+        <aside class="card">
+          <strong>Como participar</strong>
+          <ul style="color:var(--muted); margin:8px 0 0 16px">
+            <li>Separe resíduos recicláveis (papel, plástico, vidro, metal).</li>
+            <li>Use pontos de entrega e cooperativas locais.</li>
+            <li>Participe de campanhas educativas.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- REFF/ MAP -->
+    <section id="reflorestamento" class="card">
+      <h2>Reflorestamento & Mapa</h2>
+      <p class="muted">Localize áreas, acompanhe plantios e eventos de preservação de nascentes.</p>
+
+      <div style="display:grid; grid-template-columns:1fr 360px; gap:12px; margin-top:12px">
+        <div>
+          <div class="map-embed card">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53219.66146188611!2d-52.41772485014207!3d-26.86791383193504!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94e4c24baacde26b%3A0x212d00441b93f969!2sXanxer%C3%AA%2C%20SC%2C%2089820-000%2C%20Brasil!5e0!3m2!1spt-BR!2sus!4v1787186304849!5m2!1spt-BR!2sus" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <strong>Projetos locais</strong>
+            <p class="muted">Registre área plantada, parceiros, espécies e fotos.</p>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <strong>Documentação & Relatórios</strong>
+            <p class="muted">Faça upload de imagens para Storage; registre metadados no Firestore (veja firebase-app.js).</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INDICADORES: Coleta de Lixo & Poluições -->
+    <section id="indicadores" class="card">
+      <h2>Indicadores</h2>
+      <p class="muted">Coleta de Lixo e Poluições — painéis simples e informativos.</p>
+
+      <div class="grid-2" style="margin-top:12px">
+        <div class="card chart-wrap">
+          <h3>Coleta de Lixo</h3>
+          <canvas id="chartLixo" aria-label="Gráfico de coleta de lixo"></canvas>
+          <div id="ovLixo" class="overlay"><div class="note">Aguardando dados de coleta — Preservar o meio ambiente é uma escolha.</div></div>
+        </div>
+
+        <div class="card chart-wrap">
+          <h3>Poluições</h3>
+          <canvas id="chartPoluicoes" aria-label="Gráfico de poluições"></canvas>
+          <div id="ovPoluicoes" class="overlay"><div class="note">Aguardando dados de poluições — E essa escolha começa com cada um de nós.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTÍCIAS -->
+    <section id="noticias" class="card">
+      <h2>Notícias & Eventos</h2>
+      <div id="newsList" class="news-list" style="margin-top:12px"></div>
+    </section>
+
+    <!-- MÍDIA + CHAT -->
+    <section id="media" class="card">
+      <div style="display:grid; grid-template-columns:1fr 420px; gap:18px; align-items:start">
+        <div>
+          <h2>Vídeos — Projetos & Campanhas</h2>
+          <p class="muted">Adicione MP4s (Storage/CDN) ou use URLs públicos. Previews locais para testes.</p>
+          <div style="display:flex; gap:10px; align-items:center; margin-top:12px">
+            <input id="videoFileInput" type="file" accept="video/mp4,video/webm" />
+            <button id="addLocalVideoBtn" class="btn">Adicionar (preview)</button>
+            <input id="videoUrlInput" type="text" placeholder="URL pública do MP4" style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eaee" />
+            <button id="addUrlVideoBtn" class="btn">Adicionar URL</button>
+          </div>
+          <div id="videoGallery" class="video-grid" style="margin-top:12px"></div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <h3>Chat Comunitário</h3>
+            <div class="chat">
+              <div id="chatBox" aria-live="polite"></div>
+              <div class="chat-controls" style="margin-top:8px">
+                <input id="displayName" type="text" placeholder="Seu nome (opcional)" style="width:130px" />
+                <input id="messageInput" type="text" placeholder="Mensagem pública" style="flex:1" />
+                <button id="sendBtn" class="btn">Enviar</button>
+              </div>
+              <div style="margin-top:8px" class="muted">Autenticação anônima é utilizada — mensagens públicas.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="videoModal" class="modal" aria-hidden="true" role="dialog" aria-label="Player de vídeo">
+    <div class="box" role="document"><video id="modalVideo" controls playsinline></video></div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div><strong>Xanxerê Sustentável • 2026</strong><p class="muted" style="margin-top:8px">Créditos: Prefeitura de Xanxerê, EPE, ONGs e parceiros locais.</p></div>
+      <div><strong>Contato</strong><p class="muted" style="margin-top:8px">sustentabilidade@xanxere.sc.gov.br</p></div>
+    </div>
+  </footer>
+
+  <!-- Chart.js UMD CDN com fallback local -->
+  <script>
+    (function loadChart(){
+      const cdn = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+      const local = './vendor/chart.umd.min.js';
+      function append(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+      append(cdn).catch(()=>append(local).catch(()=>console.warn('Chart.js não carregou.')) );
+    })();
+  </script>
+
+  <script type="module">
+    import firebaseApp from './firebase-app.js'; // requer servidor http(s) — NÃO abra via file://
+
+    // Inicializa Firebase
+    firebaseApp.initFirebase();
+
+    // Simples filtro cliente para mensagens
+    const basicBlocklist = ['http://','https://','<script','buy now','free money','spam'];
+    function isAllowedMessage(text){
+      if(!text) return false;
+      const t=text.toLowerCase();
+      if(t.length>1000) return false;
+      for(const p of basicBlocklist) if(t.includes(p)) return false;
+      return true;
+    }
+
+    /* UI helpers */
+    const videoGallery = document.getElementById('videoGallery');
+    const modal = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+
+    function createVideoCard({ title='Vídeo', thumb='', src='' }){
+      const d=document.createElement('div'); d.className='video-card';
+      const img=document.createElement('img'); img.alt=title; img.src=thumb||'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="100%" height="100%" fill="%23000"/><text x="50%" y="50%" fill="%23fff" font-size="18" text-anchor="middle" dominant-baseline="middle">Vídeo</text></svg>';
+      const lb=document.createElement('div'); lb.className='label'; lb.textContent=title;
+      d.appendChild(img); d.appendChild(lb); d.addEventListener('click', ()=> openVideo(src));
+      d.tabIndex=0; d.addEventListener('keydown', e=>{ if(e.key==='Enter') openVideo(src); });
+      return d;
+    }
+    function openVideo(src){ if(!src) return; modalVideo.src=src; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); modalVideo.play().catch(()=>{}); }
+    function closeVideo(){ modalVideo.pause(); modalVideo.src=''; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+    modal.addEventListener('click', e=>{ if(e.target===modal) closeVideo(); }); document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeVideo(); });
+
+    /* Videos handlers */
+    document.getElementById('addLocalVideoBtn').addEventListener('click', ()=>{
+      const input=document.getElementById('videoFileInput');
+      if(!input.files || input.files.length===0){ alert('Selecione um arquivo MP4'); return; }
+      const file=input.files[0]; const url=URL.createObjectURL(file); const card=createVideoCard({ title:file.name, thumb:'', src:url }); videoGallery.prepend(card); input.value='';
+    });
+    document.getElementById('addUrlVideoBtn').addEventListener('click', ()=>{
+      const url=document.getElementById('videoUrlInput').value.trim();
+      if(!url){ alert('Cole a URL pública do MP4'); return; }
+      const name=url.split('/').pop().split('?')[0]; const card=createVideoCard({ title:name, thumb:'', src:url }); videoGallery.prepend(card); document.getElementById('videoUrlInput').value='';
+    });
+
+    /* Chat realtime */
+    (async function initChat(){
+      try{ await firebaseApp.signInAnonymouslyIfNeeded(); } catch(e){ console.warn('Auth anon falhou', e); }
+      const chatBox=document.getElementById('chatBox');
+      const sendBtn=document.getElementById('sendBtn');
+      const msgInput=document.getElementById('messageInput');
+      const nameInput=document.getElementById('displayName');
+
+      function renderMessages(msgs){
+        chatBox.innerHTML='';
+        msgs.forEach(m=>{
+          const el=document.createElement('div'); el.className='chat-msg';
+          const author=document.createElement('div'); author.style.fontWeight='700'; author.textContent=m.author||'Visitante';
+          const text=document.createElement('div'); text.textContent=m.text||'';
+          const time=document.createElement('div'); time.style.fontSize='12px'; time.style.color='var(--muted)';
+          const d = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate() : (m.createdAt ? new Date(m.createdAt.seconds*1000) : null);
+          time.textContent = d ? d.toLocaleString() : '';
+          el.appendChild(author); el.appendChild(text); el.appendChild(time); chatBox.appendChild(el);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      firebaseApp.listenChat({ municipio:'xanxere', onUpdate: renderMessages, limitSize:300 });
+
+      sendBtn.addEventListener('click', async ()=>{
+        const text = msgInput.value; if(!text || text.trim()==='') return;
+        if(!isAllowedMessage(text)){ alert('Mensagem bloqueada por política local.'); return; }
+        const name = nameInput.value && nameInput.value.trim() ? nameInput.value.trim() : 'Visitante';
+        sendBtn.disabled = true;
+        try{ await firebaseApp.sendChatMessage({ municipio:'xanxere', author:name, text }); msgInput.value=''; }
+        catch(err){ console.error('Erro enviar msg', err); alert('Erro ao enviar mensagem'); }
+        finally{ sendBtn.disabled = false; }
+      });
+      msgInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendBtn.click(); } });
+    })();
+
+    /* Populate site: busca keys reciclagem, residuos, poluicoes */
+    async function populateSite(){
+      const data = await firebaseApp.fetchMunicipalData().catch(()=> ({}));
+      if(!data || Object.keys(data).length===0){
+        try{ const resp = await fetch('./dataxanxere-2026.json', {cache:'no-store'}); if(resp.ok){ Object.assign(data, await resp.json()); } }catch(e){ console.warn('fallback JSON não encontrado', e); }
+      }
+
+      // Reciclagem
+      const ovRec = document.getElementById('ovReciclagem');
+      if(data.reciclagem && data.reciclagem.length>0 && window.Chart){
+        ovRec.style.display='none';
+        const ctx = document.getElementById('chartReciclagem').getContext('2d');
+        new Chart(ctx, { type:'bar', data:{ labels:data.reciclagem.map(d=>d.label), datasets:[{ label:'Taxa de Reciclagem (%)', data:data.reciclagem.map(d=>d.value), backgroundColor:'#2f8f4a' }] }, options:{responsive:true,maintainAspectRatio:false} });
+      } else ovRec.style.display='flex';
+
+      // Resíduos
+      const ovRes = document.getElementById('ovLixo');
+      const residuos = data.residuos || data.lixo || data.residuo || [];
+      if(residuos && residuos.length>0 && window.Chart){
+        ovRes.style.display='none';
+        const ctx = document.getElementById('chartLixo').getContext('2d');
+        new Chart(ctx, { type:'doughnut', data:{ labels:residuos.map(d=>d.label), datasets:[{ data:residuos.map(d=>d.value), backgroundColor:['#70bf7a','#f6d365','#6b4f3a'] }] }, options:{responsive:true,maintainAspectRatio:false} });
+      } else ovRes.style.display='flex';
+
+      // Poluições
+      const ovPol = document.getElementById('ovPoluicoes');
+      if(data.poluicoes && data.poluicoes.length>0 && window.Chart){
+        ovPol.style.display='none';
+        const ctx = document.getElementById('chartPoluicoes').getContext('2d');
+        new Chart(ctx, { type:'line', data:{ labels:data.poluicoes.map(d=>d.label), datasets:[{ label:'Índice de Poluição', data:data.poluicoes.map(d=>d.value), borderColor:'#d9534f', backgroundColor:'rgba(217,83,79,0.08)', tension:0.3 }] }, options:{responsive:true,maintainAspectRatio:false} });
+      } else ovPol.style.display='flex';
+
+      // Notícias
+      let news = await firebaseApp.fetchNews().catch(()=>[]);
+      if(news.length === 0 && data.noticias) news = data.noticias;
+      renderNews(news);
+
+      // Vídeos
+      let vids = await firebaseApp.fetchVideos().catch(()=>[]);
+      if(vids.length === 0 && data.videos) vids = data.videos;
+      for(const v of vids){
+        if(v.thumbPath) v.thumbUrl = await firebaseApp.getImageURL(v.thumbPath).catch(()=>null);
+        const src = v.fileUrl || v.embedUrl || v.url || null;
+        const card = createVideoCard({ title:v.title || 'Vídeo', thumb:v.thumbUrl || v.thumb || '', src });
+        videoGallery.appendChild(card);
+      }
+    }
+
+    function renderNews(items){
+      const container = document.getElementById('newsList'); container.innerHTML='';
+      if(!items || items.length===0){ const p=document.createElement('div'); p.className='muted'; p.textContent='Nenhuma notícia disponível.'; container.appendChild(p); return; }
+      items.forEach(n=>{
+        const a=document.createElement('article'); a.className='news-item card';
+        const thumb=document.createElement('div'); thumb.className='news-thumb';
+        if(n.thumbUrl) thumb.style.backgroundImage=`url(${n.thumbUrl})`, thumb.style.backgroundSize='cover';
+        const body=document.createElement('div'); body.style.flex='1';
+        const h3=document.createElement('h3'); h3.textContent=n.title || '(sem título)';
+        const p=document.createElement('p'); p.className='muted'; p.textContent=n.summary || '';
+        body.appendChild(h3); body.appendChild(p); a.appendChild(thumb); a.appendChild(body); container.appendChild(a);
+      });
+    }
+
+    // Run
+    populateSite().catch(e=>console.error('populateSite failed', e));
+  </script>
+</body>
+</html>

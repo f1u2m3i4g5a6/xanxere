@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // MUNICIPIOS: leitura pública, escrita autenticada
+    match /municipios/{municipio} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid != null;
+    }
+
+    // NOTICIAS: leitura pública, escrita autenticada
+    match /noticias/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid != null;
+    }
+
+    // VIDEOS: leitura pública, escrita autenticada
+    match /videos/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid != null;
+    }
+
+    // CHAT: leitura pública, escrita apenas para usuários autenticados (anon auth permitida)
+    match /chat/{msgId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid != null;
+    }
+
+    // MEDIA METADATA (gerada por Cloud Function)
+    match /mediaMeta/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid != null;
+    }
+
+    // Por padrão, negar acesso
+    match /{document=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+  }
+}

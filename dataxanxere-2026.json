@@ -1,0 +1,29 @@
+{
+  "reciclagem": [
+    { "label": "2026", "value": null }
+  ],
+  "residuos": [
+    { "label": "Residencial (m³/ano)", "value": null },
+    { "label": "Industrial (m³/ano)", "value": null }
+  ],
+  "poluicoes": [
+    { "label": "Jan", "value": null },
+    { "label": "Fev", "value": null },
+    { "label": "Mar", "value": null }
+  ],
+  "noticias": [
+    {
+      "title": "Programa de Desenvolvimento Sustentável — Relatório 2026",
+      "summary": "Resumo e links para atas de audiência pública.",
+      "thumbUrl": "",
+      "url": ""
+    }
+  ],
+  "videos": [
+    {
+      "title": "Projeto Reflorestamento - Xanxerê",
+      "embedUrl": "https://www.youtube.com/embed/SEU_VIDEO_ID",
+      "thumbUrl": ""
+    }
+  ]
+}
